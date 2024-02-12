@@ -8,34 +8,27 @@ export default function useAuth() {
     isFetching: true,
   });
 
-  const updateAuth = (user, logInStatus) => {
-    setAuth((prevAuth) => ({
-      ...prevAuth,
-      currentUser: user,
-      isLoggedIn: logInStatus,
-    }));
-  };
+  async function updateAuth() {
+    try {
+      const user = await new AuthService({}).getUser();
+      setAuth((prevAuth) => ({
+        ...auth,
+        currentUser: user,
+        isLoggedIn: true,
+        isFetching: false,
+      }));
+    } catch (error) {
+      setAuth((prevAuth) => ({
+        ...auth,
+        currentUser: null,
+        isLoggedIn: false,
+        isFetching: false,
+      }));
+    }
+  }
 
   useEffect(() => {
-    async function get() {
-      try {
-        const user = await new AuthService({}).getUser();
-        setAuth((prevAuth) => ({
-          ...auth,
-          currentUser: user,
-          isLoggedIn: true,
-          isFetching: false,
-        }));
-      } catch (error) {
-        setAuth((prevAuth) => ({
-          ...auth,
-          currentUser: null,
-          isLoggedIn: false,
-          isFetching: false,
-        }));
-      }
-    }
-    get();
+    updateAuth();
   }, []);
 
   return [auth, updateAuth];

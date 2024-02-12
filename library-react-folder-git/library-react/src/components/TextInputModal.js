@@ -14,7 +14,7 @@ export default function TextInputModal({
     <div
       className={`${
         !isVisible && "hidden"
-      } fixed inset-0 z-50 h-screen w-screen bg-slate-800 bg-opacity-25`}
+      } fixed inset-0 z-50 h-screen w-screen bg-slate-800 bg-opacity-35`}
     >
       <div class=" p-4 w-full max-w-md max-h-full mx-auto">
         <div class="bg-white rounded-lg shadow dark:bg-gray-700">
@@ -47,10 +47,10 @@ export default function TextInputModal({
               </div>
 
               <button
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault();
                   actionMethod(inputValue);
                 }}
-                type="button"
                 className="col-span-1 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-3 py-1 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
                 {actionName}

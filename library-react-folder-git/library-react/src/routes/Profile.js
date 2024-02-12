@@ -12,7 +12,7 @@ export default function Profile() {
   const logout = async () => {
     try {
       await new AuthService({}).logOut();
-      updateAuth(null, false);
+      updateAuth();
     } catch (error) {
       console.log("Could not log out");
     }

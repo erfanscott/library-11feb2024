@@ -1,18 +1,48 @@
 import React, { useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { AuthContext } from "../App";
 import MemberService from "../REST/member-service";
 import TextInputModal from "./TextInputModal";
 
 export default function MemberView({ logout }) {
   const { auth } = useContext(AuthContext);
-  const usersName = auth.currentUser.firstName;
+  const { currentUser } = auth;
+  const usersName = currentUser.firstName;
   const [borrowedBooks, setBorrowedBooks] = useState([]);
   const [isBorrowModalVisible, setIsBorrowModalVisible] = useState(false);
 
-  function borrowBook(id) {
-    console.log(id);
+  async function borrowBook(bookId) {
+    try {
+      await new MemberService({}).borrowBook(currentUser.id, bookId);
+      loadBorrowedBooks();
+    } catch (error) {
+      toast.error("Something went wrong");
+    }
     setIsBorrowModalVisible(false);
   }
+  async function returnBook(bookId) {
+    try {
+      await new MemberService({}).returnBook(currentUser.id, bookId);
+      loadBorrowedBooks();
+    } catch (error) {
+      toast.error("Something went wrong");
+    }
+  }
+
+  async function loadBorrowedBooks() {
+    try {
+      const books = await new MemberService({}).getBorrowedBooks(
+        currentUser.id
+      );
+      setBorrowedBooks(books);
+    } catch (error) {
+      setBorrowedBooks([]);
+    }
+  }
+
+  useEffect(() => {
+    loadBorrowedBooks();
+  }, []);
 
   const borrowedBooksList = borrowedBooks.map((book) => {
     return (
@@ -30,7 +60,7 @@ export default function MemberView({ logout }) {
 
         <td class="px-6 py-4">
           <a
-            href="#"
+            onClick={() => returnBook(book.id)}
             className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
           >
             Return
@@ -40,29 +70,15 @@ export default function MemberView({ logout }) {
     );
   });
 
-  useEffect(() => {
-    async function loadBorrowedBooks() {
-      try {
-        const books = await new MemberService({}).getBorrowedBooks(
-          auth.currentUser.id
-        );
-        setBorrowedBooks(books);
-      } catch (error) {
-        setBorrowedBooks([]);
-      }
-    }
-    loadBorrowedBooks();
-  }, [auth.currentUser]);
-
   return (
     <section className="bg-gray-200 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-xl xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+        <div className="w-full max-h-[90vh] bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-xl xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
               Welcome {usersName}
             </h1>
-            <h2 className="text-sm spa font-bold leading-tight tracking-tight text-gray-900 md:text-[14px] dark:text-white">
+            <h2 className="cursor-pointer text-sm spa font-bold leading-tight tracking-tight text-gray-900 md:text-[14px] dark:text-white">
               You have signed in as a library member !{" "}
               <span
                 onClick={logout}
@@ -109,7 +125,7 @@ export default function MemberView({ logout }) {
                 </h5>
               </a>
 
-              <div class="relative col-span-2 pt-8 overflow-x-auto  bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+              <div class="relative col-span-2 pt-8 overflow-y-scroll overflow-x-auto  bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                 <h2 class="mb-8 text-lg sm:text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-center">
                   Borrowed Books
                 </h2>

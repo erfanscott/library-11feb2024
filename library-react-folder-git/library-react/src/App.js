@@ -6,6 +6,7 @@ import Profile from "./routes/Profile";
 import Register from "./routes/Register";
 import useAuth from "./hooks/useAuth";
 import Dummy from "./routes/Dummy";
+import { ToastContainer } from "react-toastify";
 
 export const AuthContext = createContext();
 
@@ -17,14 +18,17 @@ function App() {
     return <h1>Loading.....</h1>;
   } else {
     return (
-      <AuthContext.Provider value={{ auth, updateAuth }}>
-        <Routes>
-          <Route element={<Dummy />} path="/dummy" />
-          <Route element={<Login />} path="/log-in" />
-          <Route element={<Register />} path="/register" />
-          <Route element={<Profile />} path="*" />
-        </Routes>
-      </AuthContext.Provider>
+      <div id="App">
+        <AuthContext.Provider value={{ auth, updateAuth }}>
+          <Routes>
+            <Route element={<Dummy />} path="/dummy" />
+            <Route element={<Login />} path="/log-in" />
+            <Route element={<Register />} path="/register" />
+            <Route element={<Profile />} path="*" />
+          </Routes>
+        </AuthContext.Provider>
+        <ToastContainer />
+      </div>
     );
   }
 }

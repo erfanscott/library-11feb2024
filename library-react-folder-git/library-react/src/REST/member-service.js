@@ -1,5 +1,5 @@
 export default class MemberService {
-  static baseUrl = "http://localhost:8080/api/members";
+  static baseUrl = process.env.REACT_APP_API_URL + "/members";
 
   #targetMemberId;
   #targetBookId;
@@ -53,6 +53,36 @@ export default class MemberService {
     if (response.status != 200) throw new Error();
     const responseBody = await response.json();
     return responseBody;
+  }
+
+  async borrowBook(memberId, bookId) {
+    const response = await fetch(
+      MemberService.baseUrl + `/${memberId}/borrow/${bookId}`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+        },
+        credentials: "include",
+      }
+    );
+    if (!(response.status >= 200 && response.status <= 299)) throw new Error();
+  }
+  /**
+   * SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSTTTTTTTTTTTTTTTTaAAAAAAAAAAAArRRRRRRRRRRRRTTTTTTTTTTTTTHHHHHHHHHHEEEEEEEREEEEEEEEEEE
+   */
+  async returnBook(memberId, bookId) {
+    const response = await fetch(
+      MemberService.baseUrl + `/${memberId}/return/${bookId}`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+        },
+        credentials: "include",
+      }
+    );
+    if (!(response.status >= 200 && response.status <= 299)) throw new Error();
   }
 
   async getBorrowedBooks(memberId) {

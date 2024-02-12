@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../App";
 import AuthService from "../REST/auth-service";
+import MemberService from "../REST/member-service";
 
 export default function Login() {
   const { updateAuth } = useContext(AuthContext);
@@ -18,16 +19,9 @@ export default function Login() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const signedInUser = await new AuthService({
-        username,
-        password,
-      }).signIn();
-      updateAuth(signedInUser, true);
-      navigate("/profile");
-    } catch (error) {
-      updateAuth(null, false);
-    }
+    await new AuthService({ username, password }).signIn();
+    await updateAuth();
+    navigate("/profile");
   };
 
   return (
