@@ -9,7 +9,6 @@ export default function TextInputModal({
   actionMethod,
 }) {
   const [inputValue, setInputValue] = useState("");
-  console.log(isVisible);
   return (
     <div
       className={`${

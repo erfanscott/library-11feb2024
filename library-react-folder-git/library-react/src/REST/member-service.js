@@ -68,9 +68,7 @@ export default class MemberService {
     );
     if (!(response.status >= 200 && response.status <= 299)) throw new Error();
   }
-  /**
-   * SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSTTTTTTTTTTTTTTTTaAAAAAAAAAAAArRRRRRRRRRRRRTTTTTTTTTTTTTHHHHHHHHHHEEEEEEEREEEEEEEEEEE
-   */
+
   async returnBook(memberId, bookId) {
     const response = await fetch(
       MemberService.baseUrl + `/${memberId}/return/${bookId}`,

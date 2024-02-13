@@ -1,7 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { AuthContext } from "../App";
+import BookService from "../REST/book-service";
 import MemberService from "../REST/member-service";
+import SearchModal from "./SearchModal";
 import TextInputModal from "./TextInputModal";
 
 export default function MemberView({ logout }) {
@@ -10,6 +12,7 @@ export default function MemberView({ logout }) {
   const usersName = currentUser.firstName;
   const [borrowedBooks, setBorrowedBooks] = useState([]);
   const [isBorrowModalVisible, setIsBorrowModalVisible] = useState(false);
+  const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
 
   async function borrowBook(bookId) {
     try {
@@ -26,6 +29,15 @@ export default function MemberView({ logout }) {
       loadBorrowedBooks();
     } catch (error) {
       toast.error("Something went wrong");
+    }
+  }
+  async function searchBook(searchKey) {
+    try {
+      const searchResult = await BookService.searchBook(searchKey);
+      return searchResult;
+    } catch (error) {
+      toast.error("Something went wrong");
+      return [];
     }
   }
 
@@ -89,14 +101,22 @@ export default function MemberView({ logout }) {
             </h2>
 
             <div className="grid grid-cols-2 gap-4 whitespace-nowrap">
-              <a
-                href="#"
-                class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 "
+              <div
+                onClick={() => {
+                  setIsSearchModalVisible(true);
+                }}
+                class="block cursor-pointer max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
               >
-                <h5 class="mb-2 text-lg sm:text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-center">
+                <h5 class="mb-2 text-lg sm:text-2xl  font-bold tracking-tight text-gray-900 dark:text-white text-center">
                   Search Book
                 </h5>
-              </a>
+              </div>
+              <SearchModal
+                isVisible={isSearchModalVisible}
+                setIsVisible={setIsSearchModalVisible}
+                placeholder="Book, author..."
+                searchCallBack={searchBook}
+              />
 
               <div
                 onClick={() => {
