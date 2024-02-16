@@ -23,7 +23,7 @@ export default function Profile() {
   }
   return (
     <main>
-      {currentUser.roles.some((role) => role === "MEMBER") ? (
+      {currentUser.authorities.some((role) => role.name === "ROLE_MEMBER") ? (
         <MemberView logout={logout} />
       ) : (
         <LibrarianView logout={logout} />

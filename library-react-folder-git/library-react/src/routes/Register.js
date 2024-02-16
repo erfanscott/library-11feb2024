@@ -1,17 +1,20 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import AuthService from "../REST/auth-service";
 
 export default function Register() {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
-    password: "",
+    pwd: "",
     gender: "",
     role: "",
   });
-  const { firstName, lastName, email, password, gender, role } = formData;
+  const { firstName, lastName, email, pwd, gender, role } = formData;
 
   const onFormChange = (e) => {
     const { name, value } = e.target;
@@ -27,16 +30,17 @@ export default function Register() {
       const authService = new AuthService({});
       const createdUser = await authService.signUp(formData);
       toast.success("The user has been successfully created");
+      navigate("/log-in");
     } catch (error) {
       toast.error(error.message);
-      // setFormData({
-      //   firstName: "",
-      //   lastName: "",
-      //   email: "",
-      //   password: "",
-      //   gender: "",
-      //   role: "",
-      // });
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        pwd: "",
+        gender: "",
+        role: "",
+      });
     }
   };
 
@@ -119,8 +123,8 @@ export default function Register() {
                 <input
                   type="text"
                   id="password"
-                  name="password"
-                  value={password}
+                  name="pwd"
+                  value={pwd}
                   onChange={onFormChange}
                   placeholder="••••••••"
                   class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
@@ -130,10 +134,7 @@ export default function Register() {
 
               <div class="mb-8 flex flex-col tiny:flex-row justify-between">
                 <div className="space-y-4 mb-5 tiny:mb-0">
-                  <h3
-                    for="password"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
+                  <h3 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                     Your gender
                   </h3>{" "}
                   <div className="flex">
@@ -174,10 +175,7 @@ export default function Register() {
                   </div>
                 </div>
                 <div className="space-y-4">
-                  <h3
-                    for="password"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
+                  <h3 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                     Choose your role
                   </h3>{" "}
                   <div className="flex">

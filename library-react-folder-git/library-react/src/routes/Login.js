@@ -5,7 +5,7 @@ import AuthService from "../REST/auth-service";
 import MemberService from "../REST/member-service";
 
 export default function Login() {
-  const { updateAuth } = useContext(AuthContext);
+  const { auth, updateAuth } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({ username: "", password: "" });

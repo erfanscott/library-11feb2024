@@ -11,8 +11,8 @@ export default class AuthService {
   setUsername(username) {
     this.#username = username;
   }
-  setPassword(username) {
-    this.#password = username;
+  setPassword(password) {
+    this.#password = password;
   }
 
   async getUser() {
@@ -46,6 +46,8 @@ export default class AuthService {
     return responseBody;
   }
   async signUp(registerForm) {
+    const bodyJson = JSON.stringify(registerForm);
+
     const response = await fetch(
       AuthService.baseUrl +
         `${registerForm.role === "MEMBER" ? "/member" : "/librarian"}/register`,
@@ -53,19 +55,14 @@ export default class AuthService {
         method: "POST",
         headers: {
           Accept: "application/json",
+          "content-type": "application/json",
         },
-        body: {
-          firstName: registerForm.firstName,
-          lastName: registerForm.lastName,
-          email: registerForm.email,
-          pwd: registerForm.password,
-          gender: registerForm.gender,
-        },
+        body: bodyJson,
         credentials: "include",
       }
     );
 
-    if (response.status != 200) throw new Error("registration failed");
+    if (response.status != 201) throw new Error("registration failed");
 
     const responseBody = await response.json();
     return responseBody;
