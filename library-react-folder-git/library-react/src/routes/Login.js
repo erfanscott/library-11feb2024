@@ -6,10 +6,11 @@ import MemberService from "../REST/member-service";
 
 export default function Login() {
   const { updateAuth } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({ username: "", password: "" });
   const { username, password } = formData;
-  const navigate = useNavigate();
+
   const onFormChange = (e) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -77,12 +78,14 @@ export default function Login() {
               </button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Don’t have an account yet?{" "}
-                <a
-                  href="#"
-                  className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                <span
+                  onClick={() => {
+                    navigate("/register");
+                  }}
+                  className="cursor-pointer font-medium text-primary-600 hover:underline dark:text-primary-500"
                 >
                   Sign up
-                </a>
+                </span>
               </p>
             </form>
           </div>

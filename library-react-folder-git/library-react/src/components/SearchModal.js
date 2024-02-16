@@ -6,7 +6,6 @@ export default function SearchModal({
   placeholder,
   searchCallBack,
 }) {
-  const [inputValue, setInputValue] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const searchOnChange = async (e) => {
     if (e.target.value === "") setSearchResult([]);
@@ -39,16 +38,16 @@ export default function SearchModal({
     <div
       className={`${
         !isVisible && "hidden"
-      } fixed inset-0 z-50 h-screen w-screen bg-slate-800 bg-opacity-35`}
+      } fixed inset-0 z-50 h-dvh w-screen bg-slate-800 bg-opacity-35`}
     >
-      <div class="p-4 w-full max-w-md max-h-full mx-auto">
+      <div class="block p-4 w-full max-w-md max-h-[90%] mx-auto">
         <div class="bg-white rounded-lg shadow dark:bg-gray-700">
-          <form className="p-4 md:p-5">
+          <form className="p-4 space-y-2 md:p-5">
             <label
               for="default-search"
-              class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+              class="mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Search
+              Enter the Search Key
             </label>
             <div class="relative">
               <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -76,12 +75,6 @@ export default function SearchModal({
                 placeholder={placeholder}
                 required
               />
-              <button
-                type="submit"
-                class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >
-                Search
-              </button>
             </div>
           </form>
           <div className="p-4 md:p-5">
@@ -102,6 +95,15 @@ export default function SearchModal({
               <tbody>{searchResultList}</tbody>
             </table>
           </div>
+          <button
+            onClick={() => {
+              setIsVisible(false);
+            }}
+            type="button"
+            className="col-span-1 text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-3 py-1 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
+          >
+            Cancel
+          </button>
         </div>
       </div>
     </div>
