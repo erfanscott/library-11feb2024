@@ -8,6 +8,13 @@ export default class AuthService {
     this.#password = password;
   }
 
+  setUsername(username) {
+    this.#username = username;
+  }
+  setPassword(username) {
+    this.#password = username;
+  }
+
   async getUser() {
     const response = await fetch(AuthService.baseUrl + "/user", {
       method: "GET",
@@ -34,6 +41,31 @@ export default class AuthService {
     });
 
     if (response.status != 200) throw new Error();
+
+    const responseBody = await response.json();
+    return responseBody;
+  }
+  async signUp(registerForm) {
+    const response = await fetch(
+      AuthService.baseUrl +
+        `${registerForm.role === "MEMBER" ? "/member" : "/librarian"}/register`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+        },
+        body: {
+          firstName: registerForm.firstName,
+          lastName: registerForm.lastName,
+          email: registerForm.email,
+          pwd: registerForm.password,
+          gender: registerForm.gender,
+        },
+        credentials: "include",
+      }
+    );
+
+    if (response.status != 200) throw new Error("registration failed");
 
     const responseBody = await response.json();
     return responseBody;

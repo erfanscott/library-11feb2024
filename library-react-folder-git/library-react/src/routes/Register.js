@@ -1,6 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
+import { toast } from "react-toastify";
+import AuthService from "../REST/auth-service";
 
 export default function Register() {
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    gender: "",
+    role: "",
+  });
+  const { firstName, lastName, email, password, gender, role } = formData;
+
+  const onFormChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const authService = new AuthService({});
+      const createdUser = await authService.signUp(formData);
+      toast.success("The user has been successfully created");
+    } catch (error) {
+      toast.error(error.message);
+      // setFormData({
+      //   firstName: "",
+      //   lastName: "",
+      //   email: "",
+      //   password: "",
+      //   gender: "",
+      //   role: "",
+      // });
+    }
+  };
+
   return (
     <section className="bg-gray-200 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -10,9 +49,9 @@ export default function Register() {
               Sign up to my library
             </h1>
 
-            <form class="max-w-sm mx-auto">
-              <div class="mb-5 flex justify-between">
-                <div className="">
+            <form class="max-w-sm mx-auto" onSubmit={onSubmit}>
+              <div class="mb-5 flex flex-col tiny:flex-row justify-between">
+                <div className="mb-5 tiny:mb-0">
                   {" "}
                   <label
                     for="firstName"
@@ -23,6 +62,10 @@ export default function Register() {
                   <input
                     type="text"
                     id="firstName"
+                    name="firstName"
+                    value={firstName}
+                    onChange={onFormChange}
+                    placeholder="Enter your first name"
                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                     required
                   />
@@ -38,6 +81,10 @@ export default function Register() {
                   <input
                     type="text"
                     id="lastName"
+                    name="lastName"
+                    value={lastName}
+                    onChange={onFormChange}
+                    placeholder="Enter your first name"
                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                     required
                   />
@@ -54,6 +101,9 @@ export default function Register() {
                 <input
                   type="email"
                   id="email"
+                  name="email"
+                  value={email}
+                  onChange={onFormChange}
                   class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                   placeholder="name@domain.com"
                   required
@@ -67,15 +117,19 @@ export default function Register() {
                   Your password
                 </label>
                 <input
-                  type="password"
+                  type="text"
                   id="password"
+                  name="password"
+                  value={password}
+                  onChange={onFormChange}
+                  placeholder="••••••••"
                   class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                   required
                 />
               </div>
 
-              <div class="mb-8 flex justify-between">
-                <div className="space-y-4">
+              <div class="mb-8 flex flex-col tiny:flex-row justify-between">
+                <div className="space-y-4 mb-5 tiny:mb-0">
                   <h3
                     for="password"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -87,8 +141,10 @@ export default function Register() {
                       <input
                         id="male-radio"
                         type="radio"
-                        value=""
-                        name="gender-radio"
+                        value="MALE"
+                        checked={gender === "MALE"}
+                        name="gender"
+                        onChange={onFormChange}
                         class="w-3 h-3 text-purple-600 bg-gray-100 border-gray-300 dark:ring-offset-gray-800  dark:bg-gray-700 dark:border-gray-600"
                       />
                       <label
@@ -102,8 +158,10 @@ export default function Register() {
                       <input
                         id="female-radio"
                         type="radio"
-                        value=""
-                        name="gender-radio"
+                        value="FEMALE"
+                        checked={gender === "FEMALE"}
+                        name="gender"
+                        onChange={onFormChange}
                         class="w-3 h-3 text-purple-600 bg-gray-100 border-gray-300 dark:ring-offset-gray-800  dark:bg-gray-700 dark:border-gray-600"
                       />
                       <label
@@ -127,8 +185,10 @@ export default function Register() {
                       <input
                         id="member-radio"
                         type="radio"
-                        value="member-radio"
-                        name="role-radio"
+                        value="MEMBER"
+                        checked={role === "MEMBER"}
+                        name="role"
+                        onChange={onFormChange}
                         class="w-3 h-3 text-purple-600 bg-gray-100 border-gray-300 dark:ring-offset-gray-800  dark:bg-gray-700 dark:border-gray-600"
                       />
                       <label
@@ -142,8 +202,10 @@ export default function Register() {
                       <input
                         id="librarian-radio"
                         type="radio"
-                        value=""
-                        name="role-radio"
+                        value="LIBRARIAN"
+                        checked={role === "LIBRARIAN"}
+                        name="role"
+                        onChange={onFormChange}
                         class="w-3 h-3 text-purple-600 bg-gray-100 border-gray-300 dark:ring-offset-gray-800  dark:bg-gray-700 dark:border-gray-600"
                       />
                       <label
