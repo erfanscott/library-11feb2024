@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { AuthContext } from "../App";
 import AuthService from "../REST/auth-service";
 import MemberService from "../REST/member-service";
@@ -19,10 +20,14 @@ export default function Login() {
   };
 
   const onSubmit = async (e) => {
-    e.preventDefault();
-    await new AuthService({ username, password }).signIn();
-    await updateAuth();
-    navigate("/profile");
+    try {
+      e.preventDefault();
+      await new AuthService({ username, password }).signIn();
+      await updateAuth();
+      navigate("/profile");
+    } catch (error) {
+      toast.error("Bad credentials");
+    }
   };
 
   return (

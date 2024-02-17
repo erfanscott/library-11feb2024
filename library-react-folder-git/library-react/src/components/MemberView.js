@@ -1,18 +1,24 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../App";
 import BookService from "../REST/book-service";
 import MemberService from "../REST/member-service";
+import UserService from "../REST/user-service";
 import SearchModal from "./SearchModal";
 import TextInputModal from "./TextInputModal";
+import UpdateProfileModal from "./UpdateProfileModal";
 
 export default function MemberView({ logout }) {
-  const { auth } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const { auth, updateAuth } = useContext(AuthContext);
   const { currentUser } = auth;
   const usersName = currentUser.firstName;
   const [borrowedBooks, setBorrowedBooks] = useState([]);
   const [isBorrowModalVisible, setIsBorrowModalVisible] = useState(false);
   const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
+  const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
 
   async function borrowBook(bookId) {
     try {
@@ -38,6 +44,16 @@ export default function MemberView({ logout }) {
     } catch (error) {
       toast.error("Something went wrong");
       return [];
+    }
+  }
+  async function updateProfile(formData) {
+    try {
+      await UserService.updateProfile(formData, "MEMBER", currentUser.id);
+      toast.success("Your profile has been successfully updated");
+      setIsUpdateModalVisible(false);
+      updateAuth();
+    } catch (error) {
+      toast.error(error.message);
     }
   }
 
@@ -99,6 +115,11 @@ export default function MemberView({ logout }) {
         isVisible={isBorrowModalVisible}
         setIsVisible={setIsBorrowModalVisible}
       />
+      <UpdateProfileModal
+        isVisible={isUpdateModalVisible}
+        setIsVisible={setIsUpdateModalVisible}
+        updateProfileCallBack={updateProfile}
+      />
       <section className="bg-gray-200 dark:bg-gray-900">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
           <div className="w-full max-h-[90vh] bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-xl xl:p-0 dark:bg-gray-800 dark:border-gray-700">
@@ -110,7 +131,7 @@ export default function MemberView({ logout }) {
                 You have signed in as a library member !{" "}
                 <span
                   onClick={logout}
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                  className="ml-1 cursor-pointer font-medium text-red-600 dark:text-red-500 hover:underline"
                 >
                   Logout
                 </span>
@@ -139,14 +160,16 @@ export default function MemberView({ logout }) {
                   </h5>
                 </div>
 
-                <a
-                  href="#"
-                  class="block  col-span-2 p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+                <div
+                  onClick={() => {
+                    setIsUpdateModalVisible(true);
+                  }}
+                  class="block cursor-pointer col-span-2 p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
                 >
                   <h5 class="mb-2 text-lg sm:text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-center">
                     Update Profile
                   </h5>
-                </a>
+                </div>
 
                 <div class="relative col-span-2 pt-8 overflow-y-scroll overflow-x-auto  bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                   <h2 class="mb-8 text-lg sm:text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-center">
