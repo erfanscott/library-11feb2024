@@ -26,29 +26,119 @@ export default function LibrarianView({ logout }) {
     setDropDownFormData(e.target.value);
   };
 
+  const [entityListPage, setEntityListPage] = useState(1);
+
+  const entityList = { members: [], books: [] };
+  for (let i = 0; i < 3; i++) {
+    entityList.members.push(
+      <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+        <td class="px-6 py-4 font-bold">1</td>
+
+        <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+          <div class="">
+            <div class="text-base font-semibold">Neil Sims</div>
+            <div class="font-normal text-gray-500">neil.sims@flowbite.com</div>
+          </div>
+        </td>
+        <td class="px-6 py-4">Male</td>
+        <td class="px-6 py-4">Joined on</td>
+
+        <td class="px-6 py-4 flex items-end space-x-2">
+          <button
+            onClick={() => {}}
+            className="ml-1 py-2 px-2 cursor-pointer text-xs  font-medium text-white rounded bg-red-600 dark:bg-red-500 hover:underline"
+          >
+            Delete
+          </button>
+          <button
+            onClick={() => {}}
+            className="ml-1 py-2 px-2 cursor-pointer text-xs font-medium text-white rounded bg-blue-600 dark:bg-blue-500 hover:underline"
+          >
+            Details
+          </button>
+        </td>
+      </tr>
+    );
+  }
+  for (let i = 0; i < 3; i++) {
+    let isAvailable;
+    isAvailable = i % 2 === 0 ? true : false;
+
+    entityList.books.push(
+      <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+        <td class="px-6 py-4 font-bold">1</td>
+
+        <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+          <div class="">
+            <div class="text-base font-semibold">White Nights</div>
+            <div class="font-normal text-gray-500">
+              Fyodor Mikhailovich Dostoevsky
+            </div>
+          </div>
+        </td>
+
+        <td class="px-6 py-4">
+          <div class="flex items-center">
+            <div
+              class={`h-2.5 w-2.5 rounded-full ${
+                isAvailable ? "bg-green-500" : "bg-red-500"
+              } me-2`}
+            ></div>{" "}
+            {isAvailable ? "AVAILABLE" : "BORROWED"}
+          </div>
+        </td>
+        <td class="px-6 py-4 flex items-end space-x-2">
+          <button
+            onClick={() => {}}
+            className="ml-1 py-2 px-2 cursor-pointer text-xs  font-medium text-white rounded bg-red-600 dark:bg-red-500 hover:underline"
+          >
+            Delete
+          </button>
+          <button
+            onClick={() => {}}
+            className="ml-1 py-2 px-2 cursor-pointer text-xs font-medium text-white rounded bg-blue-600 dark:bg-blue-500 hover:underline"
+          >
+            Details
+          </button>
+        </td>
+      </tr>
+    );
+  }
+
   return (
-    <section className="bg-gray-200 dark:bg-gray-900">
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <div className="w-full max-h-[90vh] bg-white rounded-md sm:rounded-lg shadow dark:border md:mt-0 sm:max-w-[70%] xlg:max-w-5xl xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-          <div class="relative overflow-x-auto px-6 py-6 shadow-md rounded-md sm:rounded-lg">
+    <section className="bg-gray-200 dark:bg-gray-900 pt-7">
+      <div className="flex flex-col items-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <div className="w-full bg-white rounded-md sm:rounded-lg shadow dark:border md:mt-0 max-w-[90%] xlg:max-w-5xl xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+          <div class="relative px-6 py-6 shadow-md rounded-md sm:rounded-lg">
             <div className="mb-8 space-y-4">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
                 Welcome {usersName}
               </h1>
-              <h2 className="cursor-pointer text-sm spa font-bold leading-tight tracking-tight text-gray-900 md:text-[14px] dark:text-white">
-                You have signed in as a library member !{" "}
-                <span
-                  onClick={logout}
-                  className="ml-1 cursor-pointer font-medium text-red-600 dark:text-red-500 hover:underline"
-                >
-                  Logout
-                </span>
-              </h2>
+
+              <div className="flex justify-between items-center ">
+                <h2 className="cursor-pointer text-sm mdLg:text-[18px] spa font-bold leading-tight tracking-tight text-gray-900 dark:text-white">
+                  You have signed in as a librarian !{" "}
+                </h2>
+                <div className="space-x-4">
+                  <button
+                    onClick={logout}
+                    className="ml-1 py-2 px-2 cursor-pointer text-xs  font-medium text-white rounded bg-red-600 dark:bg-red-500 hover:underline"
+                  >
+                    Logout
+                  </button>
+                  <button
+                    onClick={() => {}}
+                    className="ml-1 py-2 px-2 cursor-pointer text-xs  font-medium text-white rounded bg-yellow-600 dark:bg-yellow-500 hover:underline"
+                  >
+                    Edit profile
+                  </button>
+                </div>
+              </div>
             </div>
-            <div class="flex items-start justify-between pb-4 dark:bg-gray-900">
+            <div class="flex flex-wrap items-start justify-between pb-4 dark:bg-gray-900">
               {/*book/member select */}
 
-              <form class="max-w-sm">
+              <form class="max-w-sm mr-12 mb-4 tinySm:mb-0">
                 <select
                   id="entity"
                   value={dropDownFormData}
@@ -63,9 +153,11 @@ export default function LibrarianView({ logout }) {
               <div className="flex space-x-2">
                 <button
                   type="button"
-                  class="focus:outline-none text-white whitespace-nowrap bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-xs px-2 py-1 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                  class="ml-1 py-2 px-2 cursor-pointer text-xs  font-medium text-white rounded bg-green-600 dark:bg-green-500 hover:underline"
                 >
-                  ADD MEMBER
+                  {`${
+                    dropDownFormData === "books" ? "ADD BOOK" : "ADD MEMBER"
+                  }`}
                 </button>
 
                 <div class="relative">
@@ -90,150 +182,101 @@ export default function LibrarianView({ logout }) {
                     onChange
                     type="search"
                     id="default-search"
-                    class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    class="block w-fulls p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder={`${
                       dropDownFormData === "books"
-                        ? "search book, author..."
-                        : "search member..."
+                        ? "book id, name, author..."
+                        : "member id, name..."
                     }`}
                     required
                   />
                 </div>
               </div>
             </div>
+            <div className="overflow-x-auto">
+              <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                {dropDownFormData === "books" ? (
+                  <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                      <th scope="col" class="px-6 py-3">
+                        ID
+                      </th>
+                      <th scope="col" class="px-6 py-3">
+                        Name / Author
+                      </th>
+                      <th scope="col" class="px-6 py-3">
+                        Status
+                      </th>
+                      <th scope="col" class="px-6 py-3">
+                        Action
+                      </th>
+                    </tr>
+                  </thead>
+                ) : (
+                  <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                      <th scope="col" class="px-6 py-3">
+                        ID
+                      </th>
+                      <th scope="col" class="px-6 py-3">
+                        Name
+                      </th>
+                      <th scope="col" class="px-6 py-3">
+                        Gender
+                      </th>
+                      <th scope="col" class="px-6 py-3">
+                        Joined on
+                      </th>
 
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-              <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                  <th scope="col" class="px-6 py-3">
-                    Name
-                  </th>
-                  <th scope="col" class="px-6 py-3">
-                    Position
-                  </th>
-                  <th scope="col" class="px-6 py-3">
-                    Status
-                  </th>
-                  <th scope="col" class="px-6 py-3">
-                    Action
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <th
-                    scope="row"
-                    class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
-                  >
-                    <div class="">
-                      <div class="text-base font-semibold">Neil Sims</div>
-                      <div class="font-normal text-gray-500">
-                        neil.sims@flowbite.com
-                      </div>
-                    </div>
-                  </th>
-                  <td class="px-6 py-4">React Developer</td>
-                  <td class="px-6 py-4">
-                    <div class="flex items-center">
-                      <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div>{" "}
-                      Online
-                    </div>
-                  </td>
-                  <td class="px-6 py-4">
-                    <a
-                      href="#"
-                      class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                    >
-                      Edit user
-                    </a>
-                  </td>
-                </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <th
-                    scope="row"
-                    class="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                  >
-                    <div class="">
-                      <div class="text-base font-semibold">Bonnie Green</div>
-                      <div class="font-normal text-gray-500">
-                        bonnie@flowbite.com
-                      </div>
-                    </div>
-                  </th>
-                  <td class="px-6 py-4">Designer</td>
-                  <td class="px-6 py-4">
-                    <div class="flex items-center">
-                      <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div>{" "}
-                      Online
-                    </div>
-                  </td>
-                  <td class="px-6 py-4">
-                    <a
-                      href="#"
-                      class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                    >
-                      Edit user
-                    </a>
-                  </td>
-                </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <th
-                    scope="row"
-                    class="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                  >
-                    <div class="">
-                      <div class="text-base font-semibold">Jese Leos</div>
-                      <div class="font-normal text-gray-500">
-                        jese@flowbite.com
-                      </div>
-                    </div>
-                  </th>
-                  <td class="px-6 py-4">Vue JS Developer</td>
-                  <td class="px-6 py-4">
-                    <div class="flex items-center">
-                      <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div>{" "}
-                      Online
-                    </div>
-                  </td>
-                  <td class="px-6 py-4">
-                    <a
-                      href="#"
-                      class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                    >
-                      Edit user
-                    </a>
-                  </td>
-                </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <th
-                    scope="row"
-                    class="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                  >
-                    <div class="">
-                      <div class="text-base font-semibold">Thomas Lean</div>
-                      <div class="font-normal text-gray-500">
-                        thomes@flowbite.com
-                      </div>
-                    </div>
-                  </th>
-                  <td class="px-6 py-4">UI/UX Engineer</td>
-                  <td class="px-6 py-4">
-                    <div class="flex items-center">
-                      <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div>{" "}
-                      Online
-                    </div>
-                  </td>
-                  <td class="px-6 py-4">
-                    <a
-                      href="#"
-                      class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                    >
-                      Edit user
-                    </a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                      <th scope="col" class="px-6 py-3">
+                        Action
+                      </th>
+                    </tr>
+                  </thead>
+                )}
+
+                <tbody>
+                  {dropDownFormData === "books"
+                    ? entityList.books
+                    : entityList.members}
+                </tbody>
+              </table>
+            </div>
+
+            <nav class="pt-4" aria-label="Table navigation">
+              <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
+                <li
+                  onClick={() => {
+                    setEntityListPage((prevEntityListPage) =>
+                      prevEntityListPage !== 1
+                        ? prevEntityListPage - 1
+                        : prevEntityListPage
+                    );
+                  }}
+                >
+                  <p class="cursor-pointer flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                    Prev
+                  </p>
+                </li>
+                <li>
+                  <p class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                    {entityListPage}
+                  </p>
+                </li>
+
+                <li
+                  onClick={() => {
+                    setEntityListPage(
+                      (prevEntityListPage) => prevEntityListPage + 1
+                    );
+                  }}
+                >
+                  <p class="cursor-pointer flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                    Next
+                  </p>
+                </li>
+              </ul>
+            </nav>
           </div>
         </div>
       </div>
