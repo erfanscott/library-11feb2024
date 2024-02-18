@@ -9,7 +9,7 @@ import SearchModal from "./SearchModal";
 import TextInputModal from "./TextInputModal";
 import UpdateProfileModal from "./UpdateProfileModal";
 
-export default function LibrarianView({ logout }) {
+export default function NewMemberView({ logout }) {
   const navigate = useNavigate();
 
   const { auth, updateAuth } = useContext(AuthContext);
@@ -117,7 +117,7 @@ export default function LibrarianView({ logout }) {
 
               <div className="flex flex-wrap justify-between items-center">
                 <h2 className="cursor-pointer text-sm whitespace-nowrap mr-4 mdLg:text-[18px] spa font-bold leading-tight tracking-tight text-gray-900 dark:text-white">
-                  You have signed in as a librarian !{" "}
+                  You have signed in as a library Member !{" "}
                 </h2>
                 <div className="flex items-center space-x-4 flex-nowrap">
                   <button
