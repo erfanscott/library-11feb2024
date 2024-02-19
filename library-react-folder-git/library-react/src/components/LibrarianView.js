@@ -49,13 +49,13 @@ export default function LibrarianView({ logout }) {
         <td class="px-6 py-4 flex items-end space-x-2">
           <button
             onClick={() => {}}
-            className="ml-1 py-2 px-2 cursor-pointer text-xs  font-medium text-white rounded bg-red-600 dark:bg-red-500 hover:underline"
+            className="py-2 px-2 cursor-pointer text-xs  font-medium text-white rounded bg-red-600 dark:bg-red-500 hover:underline"
           >
             Delete
           </button>
           <button
             onClick={() => {}}
-            className="ml-1 py-2 px-2 cursor-pointer text-xs font-medium text-white rounded bg-blue-600 dark:bg-blue-500 hover:underline"
+            className="py-2 px-2 cursor-pointer text-xs font-medium text-white rounded bg-blue-600 dark:bg-blue-500 hover:underline"
           >
             Details
           </button>
@@ -68,7 +68,10 @@ export default function LibrarianView({ logout }) {
     isAvailable = i % 2 === 0 ? true : false;
 
     entityList.books.push(
-      <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+      <tr
+        onClick={() => {}}
+        class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 active:bg-gray-200 dark:hover:bg-gray-600"
+      >
         <td class="px-2 py-4 font-bold">1</td>
 
         <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
@@ -93,13 +96,13 @@ export default function LibrarianView({ logout }) {
         <td class="px-6 py-4 flex items-end space-x-2">
           <button
             onClick={() => {}}
-            className="ml-1 py-2 px-2 cursor-pointer text-xs  font-medium text-white rounded bg-red-600 dark:bg-red-500 hover:underline"
+            className="py-2 px-2 cursor-pointer text-xs  font-medium text-white rounded bg-red-600 dark:bg-red-500 hover:underline"
           >
             Delete
           </button>
           <button
             onClick={() => {}}
-            className="ml-1 py-2 px-2 cursor-pointer text-xs font-medium text-white rounded bg-blue-600 dark:bg-blue-500 hover:underline"
+            className="py-2 px-2 cursor-pointer text-xs font-medium text-white rounded bg-blue-600 dark:bg-blue-500 hover:underline"
           >
             Details
           </button>
@@ -125,13 +128,13 @@ export default function LibrarianView({ logout }) {
                 <div className="mt-4 tiny:mt-0 flex items-center space-x-2 flex-nowrap">
                   <button
                     onClick={logout}
-                    className="ml-1 py-2 px-2 cursor-pointer text-xs  font-medium text-white rounded bg-red-600 dark:bg-red-500 hover:underline"
+                    className="py-2 px-2 cursor-pointer text-xs  font-medium text-white rounded bg-red-600 dark:bg-red-500 hover:underline"
                   >
                     Logout
                   </button>
                   <button
                     onClick={() => {}}
-                    className="ml-1 py-2 px-2 cursor-pointer text-xs  font-medium text-white rounded bg-yellow-600 dark:bg-yellow-500 hover:underline"
+                    className="py-2 px-2 cursor-pointer text-xs  font-medium text-white rounded bg-yellow-600 dark:bg-yellow-500 hover:underline"
                   >
                     Edit profile
                   </button>

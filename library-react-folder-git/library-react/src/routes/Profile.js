@@ -3,6 +3,7 @@ import { Navigate } from "react-router-dom";
 import { AuthContext } from "../App";
 import LibrarianView from "../components/LibrarianView";
 import MemberView from "../components/MemberView";
+import NewMemberView from "../components/NewMemberViwe";
 import AuthService from "../REST/auth-service";
 
 export default function Profile() {
@@ -24,7 +25,7 @@ export default function Profile() {
   return (
     <main>
       {currentUser.authorities.some((role) => role.name === "ROLE_MEMBER") ? (
-        <MemberView logout={logout} />
+        <NewMemberView logout={logout} />
       ) : (
         <LibrarianView logout={logout} />
       )}
