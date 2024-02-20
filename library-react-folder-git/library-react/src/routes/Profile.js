@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { Navigate } from "react-router-dom";
 import { AuthContext } from "../App";
-import LibrarianView from "../components/LibrarianView";
-import MemberView from "../components/MemberView";
-import NewMemberView from "../components/NewMemberViwe";
+import LibrarianView from "../components/role-view/LibrarianView";
+import MemberView from "../components/role-view/MemberView";
+import NewMemberView from "../components/role-view/NewMemberViwe";
 import AuthService from "../REST/auth-service";
 
 export default function Profile() {

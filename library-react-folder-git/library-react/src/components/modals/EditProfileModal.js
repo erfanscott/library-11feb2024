@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function UpdateProfileModal({
+export default function EditProfileModal({
   isVisible,
   setIsVisible,
   updateProfileCallBack,
