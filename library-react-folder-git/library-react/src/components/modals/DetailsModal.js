@@ -10,7 +10,16 @@ export default function DetailsModal({ isVisible, setIsVisible, item, id }) {
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            {item === "books" ? <h1>BOOK DETAILS</h1> : <h1>Member DETAILS</h1>}
+            {item === "book" ? <h1>BOOK DETAILS</h1> : <h1>Member DETAILS</h1>}
+            <button
+              onClick={() => {
+                setIsVisible(false);
+              }}
+              type="button"
+              className="col-span-1 text-gray-500 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
+            >
+              Cancel
+            </button>
           </div>
         </div>
       </div>

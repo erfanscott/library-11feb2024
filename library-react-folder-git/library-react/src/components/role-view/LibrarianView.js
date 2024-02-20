@@ -160,6 +160,7 @@ export default function LibrarianView({ logout }) {
       />
       <DetailsModal
         isVisible={isDetailsModalVisible}
+        setIsVisible={setIsDetailsModalVisible}
         item={dropDownFormData === "books" ? "book" : "member"}
         id={1}
       />
