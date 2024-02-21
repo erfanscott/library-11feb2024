@@ -72,7 +72,7 @@ export default function Member() {
         <tbody className="">
           <tr class=" bg-white border-b dark:bg-gray-800 dark:border-gray-700">
             <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-              <div class="text-base font-semibold">Notes from Underground</div>
+              <div class="text-base font-semibold">Notes from Underground Notes from Underground Notes from Underground</div>
             </td>
           </tr>
           <tr class=" bg-white border-b dark:bg-gray-800 dark:border-gray-700">

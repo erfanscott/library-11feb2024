@@ -8,8 +8,15 @@ import UserService from "../../REST/user-service";
 import EditProfileModal from "../modals/EditProfileModal";
 import AddItemModal from "../modals/AddItemModal";
 import DetailsModal from "../modals/DetailsModal";
+import ConfirmationModal from "../modals/ConfirmationModal";
 
 export default function LibrarianView({ logout }) {
+
+console.log("111111111111111111")
+
+
+
+
   const navigate = useNavigate();
 
   const { auth, updateAuth } = useContext(AuthContext);
@@ -22,6 +29,8 @@ export default function LibrarianView({ logout }) {
     useState(false);
   const [isAddItemModalVisible, setIsAddItemModalVisible] = useState(false);
   const [isDetailsModalVisible, setIsDetailsModalVisible] = useState(false);
+  const [isConfirmationModalVisible, setIsConfirmationModalVisible] = useState(false);
+  const [toBeConfirmedAction,setToBeConfirmedAction] = useState(()=>{})
 
   async function updateProfile(formData) {
     // try {
@@ -66,6 +75,7 @@ export default function LibrarianView({ logout }) {
   for (let i = 0; i < 3; i++) {
     entityList.members.push(
       <tr
+      key={`${i}`}
         onClick={() => {}}
         class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 active:bg-gray-200 dark:hover:bg-gray-600"
       >
@@ -82,7 +92,7 @@ export default function LibrarianView({ logout }) {
 
         <td class="px-6 py-4 flex items-end space-x-2">
           <button
-            onClick={() => {}}
+            onClick={(e) => {console.log("MODAL VISIBLE");e.stopPropagation();setIsConfirmationModalVisible(true)}}
             className="py-2 px-2 cursor-pointer text-xs  font-medium text-white rounded bg-red-600 active:bg-red-800 dark:bg-red-500 hover:underline"
           >
             Delete
@@ -106,6 +116,7 @@ export default function LibrarianView({ logout }) {
 
     entityList.books.push(
       <tr
+      key={`${i}`}
         onClick={() => {}}
         class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 active:bg-gray-200 dark:hover:bg-gray-600"
       >
@@ -132,7 +143,7 @@ export default function LibrarianView({ logout }) {
         </td>
         <td class="px-6 py-4 flex items-end space-x-2">
           <button
-            onClick={() => {}}
+            onClick={() => {setIsConfirmationModalVisible(true)}}
             className="py-2 px-2 cursor-pointer text-xs  font-medium text-white rounded bg-red-600 active:bg-red-800 dark:bg-red-500 hover:underline"
           >
             Delete
@@ -169,6 +180,10 @@ export default function LibrarianView({ logout }) {
         setIsVisible={setIsEditProfileModalVisible}
         updateProfileCallBack={updateProfile}
       />
+      <ConfirmationModal
+      isVisible={isConfirmationModalVisible}
+      setIsVisible={setIsConfirmationModalVisible}
+      confirmedAction={toBeConfirmedAction}/>
 
       <section className="bg-gray-200 dark:bg-gray-900">
         <div className="flex flex-col items-center px-4 py-6 [@media(min-width:400px)]:px-6 [@media(min-width:660px)]:py-8 mx-auto md:h-screen">
@@ -185,7 +200,7 @@ export default function LibrarianView({ logout }) {
                   </h2>
                   <div className="mt-4 tiny:mt-0 flex items-center space-x-2 flex-nowrap">
                     <button
-                      onClick={logout}
+                      onClick={()=>{setIsConfirmationModalVisible(true)}}
                       className="py-2 px-2 cursor-pointer text-xs  font-medium text-white rounded bg-red-600 active:bg-red-800 dark:bg-red-500 hover:underline"
                     >
                       Logout
