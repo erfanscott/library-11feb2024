@@ -16,12 +16,11 @@ export default class BookService {
       );
       console.log("after fetch");
       if (response.status != 200) throw new Error();
-      const responseBody = await response.json();
-      console.log(responseBody);
-      return responseBody;
+      var responseBody = await response.json();
     } catch (error) {
       console.log(error.message);
     }
+    return responseBody;
   }
 
   static async add(formData) {
