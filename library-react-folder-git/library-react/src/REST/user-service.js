@@ -1,12 +1,12 @@
 export default class UserService {
   static baseUrl = process.env.REACT_APP_API_URL;
 
-  static async updateProfile(formData, role, id) {
+  static async EditProfile(formData, role, id) {
     const bodyJson = JSON.stringify(formData);
 
     const response = await fetch(
       UserService.baseUrl +
-        `${role === "MEMBER" ? "/members" : "/librarians"}/${id}`,
+        `${role === "ROLE_MEMBER" ? "/members" : "/librarians"}/${id}`,
       {
         method: "PUT",
         headers: {

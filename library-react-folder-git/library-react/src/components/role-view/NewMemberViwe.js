@@ -12,7 +12,7 @@ import DetailsModal from "../modals/DetailsModal";
 import EditProfileModal from "../modals/EditProfileModal";
 import ConfirmationModal from "../modals/ConfirmationModal";
 
-export default function NewMemberView({ logout }) {
+export default function NewMemberView({ logout, editProfile }) {
   const navigate = useNavigate();
 
   const { auth, updateAuth } = useContext(AuthContext);
@@ -23,8 +23,9 @@ export default function NewMemberView({ logout }) {
   const [isEditProfileModalVisible, setIsEditProfileModalVisible] =
     useState(false);
   const [isDetailsModalVisible, setIsDetailsModalVisible] = useState(false);
-  const [isConfirmationModalVisible, setIsConfirmationModalVisible] = useState(false);
-  const [toBeConfirmedAction,setToBeConfirmedAction] = useState(()=>{})
+  const [isConfirmationModalVisible, setIsConfirmationModalVisible] =
+    useState(false);
+  const [toBeConfirmedAction, setToBeConfirmedAction] = useState(() => {});
 
   async function updateProfile(formData) {
     // try {
@@ -81,7 +82,7 @@ export default function NewMemberView({ logout }) {
           <button
             onClick={(e) => {
               e.stopPropagation();
-              setIsConfirmationModalVisible(true)
+              setIsConfirmationModalVisible(true);
             }}
             className={`${
               isAvailable
@@ -117,13 +118,13 @@ export default function NewMemberView({ logout }) {
       <EditProfileModal
         isVisible={isEditProfileModalVisible}
         setIsVisible={setIsEditProfileModalVisible}
-        updateProfileCallBack={updateProfile}
+        updateProfileCallBack={editProfile}
       />
       <ConfirmationModal
-      isVisible={isConfirmationModalVisible}
-      setIsVisible={setIsConfirmationModalVisible}
-      confirmedAction={toBeConfirmedAction}/>
-
+        isVisible={isConfirmationModalVisible}
+        setIsVisible={setIsConfirmationModalVisible}
+        confirmedAction={toBeConfirmedAction}
+      />
       <section className="bg-gray-200 dark:bg-gray-900">
         <div className="flex flex-col items-center px-4 py-6 [@media(min-width:400px)]:px-6 [@media(min-width:660px)]:py-8 mx-auto md:h-screen">
           <div className="w-full bg-white rounded-md sm:rounded-lg shadow dark:border md:mt-0 max-w-5xl xl:p-0 dark:bg-gray-800 dark:border-gray-700">
@@ -139,7 +140,10 @@ export default function NewMemberView({ logout }) {
                   </h2>
                   <div className="mt-4 tiny:mt-0 flex items-center space-x-2 flex-nowrap">
                     <button
-                      onClick={()=>{setIsConfirmationModalVisible(true)}}
+                      onClick={() => {
+                        setToBeConfirmedAction(() => logout);
+                        setIsConfirmationModalVisible(true);
+                      }}
                       className=" py-2 px-2 cursor-pointer text-xs  font-medium text-white rounded bg-red-600 active:bg-red-800 dark:bg-red-500 hover:underline"
                     >
                       Logout

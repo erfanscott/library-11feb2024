@@ -25,7 +25,8 @@ function App() {
             <Route element={<Dummy />} path="/dummy" />
             <Route element={<Login />} path="/log-in" />
             <Route element={<Register />} path="/register" />
-            <Route element={<Profile />} path="*" />
+            <Route element={<Profile />} path="/profile" />
+            {/* <Route element={<Navigate to={<Profile />} />} path="/*" /> */}
           </Routes>
         </AuthContext.Provider>
         <ToastContainer />

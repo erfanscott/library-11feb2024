@@ -10,13 +10,7 @@ import AddItemModal from "../modals/AddItemModal";
 import DetailsModal from "../modals/DetailsModal";
 import ConfirmationModal from "../modals/ConfirmationModal";
 
-export default function LibrarianView({ logout }) {
-
-console.log("111111111111111111")
-
-
-
-
+export default function LibrarianView({ logout, editProfile }) {
   const navigate = useNavigate();
 
   const { auth, updateAuth } = useContext(AuthContext);
@@ -29,30 +23,41 @@ console.log("111111111111111111")
     useState(false);
   const [isAddItemModalVisible, setIsAddItemModalVisible] = useState(false);
   const [isDetailsModalVisible, setIsDetailsModalVisible] = useState(false);
-  const [isConfirmationModalVisible, setIsConfirmationModalVisible] = useState(false);
-  const [toBeConfirmedAction,setToBeConfirmedAction] = useState(()=>{})
+  const [isConfirmationModalVisible, setIsConfirmationModalVisible] =
+    useState(false);
+  const [toBeConfirmedAction, setToBeConfirmedAction] = useState(undefined);
 
-  async function updateProfile(formData) {
-    // try {
-    //   await UserService.updateProfile(formData, "MEMBER", currentUser.id);
-    //   toast.success("Your profile has been successfully updated");
-    //   setIsUpdateModalVisible(false);
-    //   updateAuth();
-    // } catch (error) {
-    //   toast.error(error.message);
-    // }
-  }
   async function addMember(formData) {
-    // try {
-    //   await UserService.updateProfile(formData, "MEMBER", currentUser.id);
-    //   toast.success("Your profile has been successfully updated");
-    //   setIsUpdateModalVisible(false);
-    //   updateAuth();
-    // } catch (error) {
-    //   toast.error(error.message);
-    // }
+    try {
+      await MemberService.add(formData);
+      toast.success("the user has been successfully added");
+      setIsAddItemModalVisible(false);
+    } catch (error) {
+      toast.error(error.message);
+    }
   }
   async function addBook(formData) {
+    try {
+      await BookService.add(formData);
+      toast.success("The book has been successfully added to the library");
+      setIsAddItemModalVisible(false);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  }
+  async function deleteBook(formData) {
+    console.log("delete book");
+    // try {
+    //   await UserService.updateProfile(formData, "MEMBER", currentUser.id);
+    //   toast.success("Your profile has been successfully updated");
+    //   setIsUpdateModalVisible(false);
+    //   updateAuth();
+    // } catch (error) {
+    //   toast.error(error.message);
+    // }
+  }
+  async function deleteMember(formData) {
+    console.log("delete membre");
     // try {
     //   await UserService.updateProfile(formData, "MEMBER", currentUser.id);
     //   toast.success("Your profile has been successfully updated");
@@ -75,7 +80,7 @@ console.log("111111111111111111")
   for (let i = 0; i < 3; i++) {
     entityList.members.push(
       <tr
-      key={`${i}`}
+        key={`${i}`}
         onClick={() => {}}
         class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 active:bg-gray-200 dark:hover:bg-gray-600"
       >
@@ -92,7 +97,11 @@ console.log("111111111111111111")
 
         <td class="px-6 py-4 flex items-end space-x-2">
           <button
-            onClick={(e) => {console.log("MODAL VISIBLE");e.stopPropagation();setIsConfirmationModalVisible(true)}}
+            onClick={(e) => {
+              e.stopPropagation();
+              setToBeConfirmedAction(() => deleteMember);
+              setIsConfirmationModalVisible(true);
+            }}
             className="py-2 px-2 cursor-pointer text-xs  font-medium text-white rounded bg-red-600 active:bg-red-800 dark:bg-red-500 hover:underline"
           >
             Delete
@@ -100,6 +109,7 @@ console.log("111111111111111111")
           <button
             onClick={(e) => {
               e.stopPropagation();
+
               setIsDetailsModalVisible(true);
             }}
             className="py-2 px-2 cursor-pointer text-xs font-medium text-white rounded bg-blue-600 active:bg-blue-800 dark:bg-blue-500 hover:underline"
@@ -116,7 +126,7 @@ console.log("111111111111111111")
 
     entityList.books.push(
       <tr
-      key={`${i}`}
+        key={`${i}`}
         onClick={() => {}}
         class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 active:bg-gray-200 dark:hover:bg-gray-600"
       >
@@ -143,7 +153,11 @@ console.log("111111111111111111")
         </td>
         <td class="px-6 py-4 flex items-end space-x-2">
           <button
-            onClick={() => {setIsConfirmationModalVisible(true)}}
+            onClick={(e) => {
+              e.stopPropagation();
+              setToBeConfirmedAction(() => deleteBook);
+              setIsConfirmationModalVisible(true);
+            }}
             className="py-2 px-2 cursor-pointer text-xs  font-medium text-white rounded bg-red-600 active:bg-red-800 dark:bg-red-500 hover:underline"
           >
             Delete
@@ -178,12 +192,13 @@ console.log("111111111111111111")
       <EditProfileModal
         isVisible={isEditProfileModalVisible}
         setIsVisible={setIsEditProfileModalVisible}
-        updateProfileCallBack={updateProfile}
+        updateProfileCallBack={editProfile}
       />
       <ConfirmationModal
-      isVisible={isConfirmationModalVisible}
-      setIsVisible={setIsConfirmationModalVisible}
-      confirmedAction={toBeConfirmedAction}/>
+        isVisible={isConfirmationModalVisible}
+        setIsVisible={setIsConfirmationModalVisible}
+        confirmedAction={toBeConfirmedAction}
+      />
 
       <section className="bg-gray-200 dark:bg-gray-900">
         <div className="flex flex-col items-center px-4 py-6 [@media(min-width:400px)]:px-6 [@media(min-width:660px)]:py-8 mx-auto md:h-screen">
@@ -200,7 +215,10 @@ console.log("111111111111111111")
                   </h2>
                   <div className="mt-4 tiny:mt-0 flex items-center space-x-2 flex-nowrap">
                     <button
-                      onClick={()=>{setIsConfirmationModalVisible(true)}}
+                      onClick={() => {
+                        setToBeConfirmedAction(() => logout);
+                        setIsConfirmationModalVisible(true);
+                      }}
                       className="py-2 px-2 cursor-pointer text-xs  font-medium text-white rounded bg-red-600 active:bg-red-800 dark:bg-red-500 hover:underline"
                     >
                       Logout

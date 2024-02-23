@@ -42,6 +42,23 @@ export default class MemberService {
       MemberService.baseUrl + `/?=` + `${this.#searchKey}`;
   }
 
+  static async add(formData) {
+    const bodyJson = JSON.stringify(formData);
+    console.log(bodyJson);
+
+    const response = await fetch("http://localhost:8080/api/members/", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "content-type": "application/json",
+      },
+      body: bodyJson,
+
+      credentials: "include",
+    });
+    if (response.status != 200) throw new Error("Adding member failed");
+  }
+
   async getMembers() {
     const response = await fetch(MemberService.baseUrl, {
       method: "GET",
