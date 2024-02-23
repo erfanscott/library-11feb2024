@@ -11,6 +11,26 @@ import DetailsModal from "../modals/DetailsModal";
 import ConfirmationModal from "../modals/ConfirmationModal";
 
 export default function LibrarianView({ logout, editProfile }) {
+  const [entityListPage, setEntityListPage] = useState(1);
+  const entityList = { members: [], books: [] };
+
+  async function searchBook(key, page) {
+    try {
+      const result = await BookService.search(key, page);
+      console.log(result);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  }
+
+  const searchOnChange = async (e) => {
+    const results = await searchBook(e.target.value, entityListPage);
+  };
+
+  useEffect(() => {}, []);
+
+  async function loadLibraryBooks() {}
+
   const navigate = useNavigate();
 
   const { auth, updateAuth } = useContext(AuthContext);
@@ -74,9 +94,6 @@ export default function LibrarianView({ logout, editProfile }) {
     setDropDownFormData(e.target.value);
   };
 
-  const [entityListPage, setEntityListPage] = useState(1);
-
-  const entityList = { members: [], books: [] };
   for (let i = 0; i < 3; i++) {
     entityList.members.push(
       <tr
@@ -281,7 +298,7 @@ export default function LibrarianView({ logout, editProfile }) {
                       </svg>
                     </div>
                     <input
-                      onChange
+                      onChange={searchOnChange}
                       type="search"
                       id="default-search"
                       class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -290,7 +307,6 @@ export default function LibrarianView({ logout, editProfile }) {
                           ? "book id, name, author..."
                           : "member id, name..."
                       }`}
-                      required
                     />
                   </div>
                 </div>
