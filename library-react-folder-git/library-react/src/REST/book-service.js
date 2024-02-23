@@ -3,19 +3,25 @@ export default class BookService {
 
   static async search(searchKey, page) {
     console.log("search book service");
-    const response = await fetch(
-      `${"http://localhost:8080/api/books"}/page/${page - 1}`,
-      {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-        },
-        credentials: "include",
-      }
-    );
-    if (response.status != 200) throw new Error();
-    const responseBody = await response.json();
-    return responseBody;
+    try {
+      const response = await fetch(
+        `${"http://localhost:8080/api/books"}?key=${searchKey}&&page=${page - 1}`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+          },
+          credentials: "include",
+        }
+      );
+      console.log("after fetch");
+      if (response.status != 200) throw new Error();
+      const responseBody = await response.json();
+      console.log(responseBody);
+      return responseBody;
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 
   static async add(formData) {

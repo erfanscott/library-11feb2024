@@ -11,23 +11,39 @@ import DetailsModal from "../modals/DetailsModal";
 import ConfirmationModal from "../modals/ConfirmationModal";
 
 export default function LibrarianView({ logout, editProfile }) {
+  const [dropDownFormData, setDropDownFormData] = useState("books");
+
+  const onDropDownFormChange = (e) => {
+    setDropDownFormData(e.target.value);
+  };
+
   const [entityListPage, setEntityListPage] = useState(1);
-  const entityList = { members: [], books: [] };
+  const [entityList, setEntityList] = useState([]);
+  const [searchedKey, setSearchedKey] = useState("");
 
   async function searchBook(key, page) {
-    try {
-      const result = await BookService.search(key, page);
-      console.log(result);
-    } catch (error) {
-      toast.error(error.message);
-    }
+    const result = await BookService.search(key, page);
+  }
+  async function searchMember(key, page) {
+    const result = await MemberService.search(key, page);
   }
 
   const searchOnChange = async (e) => {
-    const results = await searchBook(e.target.value, entityListPage);
+    try {
+      setSearchedKey(e.target.value);
+      if (dropDownFormData === "books") {
+        setEntityList(await searchBook(e.target.value, entityListPage));
+      } else {
+        setEntityList(await searchMember(e.target.value, entityListPage));
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    setSearchedKey("");
+  }, [dropDownFormData]);
 
   async function loadLibraryBooks() {}
 
@@ -88,109 +104,204 @@ export default function LibrarianView({ logout, editProfile }) {
     // }
   }
 
-  const [dropDownFormData, setDropDownFormData] = useState("books");
-
-  const onDropDownFormChange = (e) => {
-    setDropDownFormData(e.target.value);
-  };
-
-  for (let i = 0; i < 3; i++) {
-    entityList.members.push(
-      <tr
-        key={`${i}`}
-        onClick={() => {}}
-        class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 active:bg-gray-200 dark:hover:bg-gray-600"
-      >
-        <td class="px-2 py-4 font-bold">1</td>
-
-        <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-          <div class="">
-            <div class="text-base font-semibold">Neil Sims</div>
-            <div class="font-normal text-gray-500">neil.sims@flowbite.</div>
-          </div>
-        </td>
-        <td class="hidden md:table-cell px-6 py-4">Male</td>
-        <td class="hidden md:table-cell px-6 py-4">Joined on</td>
-
-        <td class="px-6 py-4 flex items-end space-x-2">
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setToBeConfirmedAction(() => deleteMember);
-              setIsConfirmationModalVisible(true);
-            }}
-            className="py-2 px-2 cursor-pointer text-xs  font-medium text-white rounded bg-red-600 active:bg-red-800 dark:bg-red-500 hover:underline"
-          >
-            Delete
-          </button>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-
-              setIsDetailsModalVisible(true);
-            }}
-            className="py-2 px-2 cursor-pointer text-xs font-medium text-white rounded bg-blue-600 active:bg-blue-800 dark:bg-blue-500 hover:underline"
-          >
-            Details
-          </button>
-        </td>
-      </tr>
-    );
-  }
-  for (let i = 0; i < 3; i++) {
-    let isAvailable;
-    isAvailable = i % 2 === 0 ? true : false;
-
-    entityList.books.push(
-      <tr
-        key={`${i}`}
-        onClick={() => {}}
-        class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 active:bg-gray-200 dark:hover:bg-gray-600"
-      >
-        <td class="px-2 py-4 font-bold">1</td>
-
-        <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-          <div class="">
-            <div class="text-base font-semibold">White Nights</div>
-            <div class="font-normal text-gray-500">
-              Fyodor Mikhailovich Dostoevsky
-            </div>
-          </div>
-        </td>
-
-        <td class="hidden md:table-cell px-6 py-4">
-          <div class="flex items-center">
-            <div
-              class={`h-2.5 w-2.5 rounded-full ${
-                isAvailable ? "bg-green-500" : "bg-red-500"
-              } me-2`}
-            ></div>{" "}
-            {isAvailable ? "AVAILABLE" : "BORROWED"}
-          </div>
-        </td>
-        <td class="px-6 py-4 flex items-end space-x-2">
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setToBeConfirmedAction(() => deleteBook);
-              setIsConfirmationModalVisible(true);
-            }}
-            className="py-2 px-2 cursor-pointer text-xs  font-medium text-white rounded bg-red-600 active:bg-red-800 dark:bg-red-500 hover:underline"
-          >
-            Delete
-          </button>
-          <button
+  const toBeRenderedEntityList = !entityList
+    ? []
+    : entityList.map((entity) =>
+        dropDownFormData === "members" ? (
+          <tr
+            key={`${entity.id}`}
             onClick={() => {
               setIsDetailsModalVisible(true);
             }}
-            className="py-2 px-2 cursor-pointer text-xs font-medium text-white rounded bg-blue-600 active:bg-blue-800 dark:bg-blue-500 hover:underline"
+            class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 active:bg-gray-200 dark:hover:bg-gray-600"
           >
-            Details
-          </button>
-        </td>
-      </tr>
-    );
-  }
+            <td class="px-2 py-4 font-bold">{entity.id}</td>
+
+            <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+              <div class="">
+                <div class="text-base font-semibold">
+                  {entity.firstName + "\t" + entity.lastName}
+                </div>
+                <div class="font-normal text-gray-500">{entity.email}</div>
+              </div>
+            </td>
+            <td class="hidden md:table-cell px-6 py-4">{entity.gender}</td>
+
+            <td class="px-6 py-4 flex items-end space-x-2">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setToBeConfirmedAction(() => deleteMember);
+                  setIsConfirmationModalVisible(true);
+                }}
+                className="py-2 px-2 cursor-pointer text-xs  font-medium text-white rounded bg-red-600 active:bg-red-800 dark:bg-red-500 hover:underline"
+              >
+                Delete
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+
+                  setIsDetailsModalVisible(true);
+                }}
+                className="py-2 px-2 cursor-pointer text-xs font-medium text-white rounded bg-blue-600 active:bg-blue-800 dark:bg-blue-500 hover:underline"
+              >
+                Details
+              </button>
+            </td>
+          </tr>
+        ) : (
+          <tr
+            key={`${entity.id}`}
+            onClick={() => {
+              setIsDetailsModalVisible(true);
+            }}
+            class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 active:bg-gray-200 dark:hover:bg-gray-600"
+          >
+            <td class="px-2 py-4 font-bold">1</td>
+
+            <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+              <div class="">
+                <div class="text-base font-semibold">{entity.name}</div>
+                <div class="font-normal text-gray-500">{entity.authorName}</div>
+              </div>
+            </td>
+
+            <td class="hidden md:table-cell px-6 py-4">
+              <div class="flex items-center">
+                <div
+                  class={`h-2.5 w-2.5 rounded-full ${
+                    entity.availability === "AVAILABLE"
+                      ? "bg-green-500"
+                      : "bg-red-500"
+                  } me-2`}
+                ></div>{" "}
+                {entity.availability}
+              </div>
+            </td>
+            <td class="px-6 py-4 flex items-end space-x-2">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setToBeConfirmedAction(() => deleteBook);
+                  setIsConfirmationModalVisible(true);
+                }}
+                className="py-2 px-2 cursor-pointer text-xs  font-medium text-white rounded bg-red-600 active:bg-red-800 dark:bg-red-500 hover:underline"
+              >
+                Delete
+              </button>
+              <button
+                onClick={() => {
+                  setIsDetailsModalVisible(true);
+                }}
+                className="py-2 px-2 cursor-pointer text-xs font-medium text-white rounded bg-blue-600 active:bg-blue-800 dark:bg-blue-500 hover:underline"
+              >
+                Details
+              </button>
+            </td>
+          </tr>
+        )
+      );
+
+  console.log(entityList);
+
+  // for (let i = 0; i < 3; i++) {
+  //   entityList.push(
+  //     <tr
+  //       key={`${i}`}
+  //       onClick={() => {}}
+  //       class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 active:bg-gray-200 dark:hover:bg-gray-600"
+  //     >
+  //       <td class="px-2 py-4 font-bold">1</td>
+
+  //       <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+  //         <div class="">
+  //           <div class="text-base font-semibold">Neil Sims</div>
+  //           <div class="font-normal text-gray-500">neil.sims@flowbite.</div>
+  //         </div>
+  //       </td>
+  //       <td class="hidden md:table-cell px-6 py-4">Male</td>
+  //       <td class="hidden md:table-cell px-6 py-4">Joined on</td>
+
+  //       <td class="px-6 py-4 flex items-end space-x-2">
+  //         <button
+  //           onClick={(e) => {
+  //             e.stopPropagation();
+  //             setToBeConfirmedAction(() => deleteMember);
+  //             setIsConfirmationModalVisible(true);
+  //           }}
+  //           className="py-2 px-2 cursor-pointer text-xs  font-medium text-white rounded bg-red-600 active:bg-red-800 dark:bg-red-500 hover:underline"
+  //         >
+  //           Delete
+  //         </button>
+  //         <button
+  //           onClick={(e) => {
+  //             e.stopPropagation();
+
+  //             setIsDetailsModalVisible(true);
+  //           }}
+  //           className="py-2 px-2 cursor-pointer text-xs font-medium text-white rounded bg-blue-600 active:bg-blue-800 dark:bg-blue-500 hover:underline"
+  //         >
+  //           Details
+  //         </button>
+  //       </td>
+  //     </tr>
+  //   );
+  // }
+  // for (let i = 0; i < 3; i++) {
+  //   let isAvailable;
+  //   isAvailable = i % 2 === 0 ? true : false;
+
+  //   entityList.push(
+  //     <tr
+  //       key={`${i}`}
+  //       onClick={() => {}}
+  //       class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 active:bg-gray-200 dark:hover:bg-gray-600"
+  //     >
+  //       <td class="px-2 py-4 font-bold">1</td>
+
+  //       <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+  //         <div class="">
+  //           <div class="text-base font-semibold">White Nights</div>
+  //           <div class="font-normal text-gray-500">
+  //             Fyodor Mikhailovich Dostoevsky
+  //           </div>
+  //         </div>
+  //       </td>
+
+  //       <td class="hidden md:table-cell px-6 py-4">
+  //         <div class="flex items-center">
+  //           <div
+  //             class={`h-2.5 w-2.5 rounded-full ${
+  //               isAvailable ? "bg-green-500" : "bg-red-500"
+  //             } me-2`}
+  //           ></div>{" "}
+  //           {isAvailable ? "AVAILABLE" : "BORROWED"}
+  //         </div>
+  //       </td>
+  //       <td class="px-6 py-4 flex items-end space-x-2">
+  //         <button
+  //           onClick={(e) => {
+  //             e.stopPropagation();
+  //             setToBeConfirmedAction(() => deleteBook);
+  //             setIsConfirmationModalVisible(true);
+  //           }}
+  //           className="py-2 px-2 cursor-pointer text-xs  font-medium text-white rounded bg-red-600 active:bg-red-800 dark:bg-red-500 hover:underline"
+  //         >
+  //           Delete
+  //         </button>
+  //         <button
+  //           onClick={() => {
+  //             setIsDetailsModalVisible(true);
+  //           }}
+  //           className="py-2 px-2 cursor-pointer text-xs font-medium text-white rounded bg-blue-600 active:bg-blue-800 dark:bg-blue-500 hover:underline"
+  //         >
+  //           Details
+  //         </button>
+  //       </td>
+  //     </tr>
+  //   );
+  // }
 
   return (
     <div>
@@ -301,6 +412,7 @@ export default function LibrarianView({ logout, editProfile }) {
                       onChange={searchOnChange}
                       type="search"
                       id="default-search"
+                      value={searchedKey}
                       class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder={`${
                         dropDownFormData === "books"
@@ -342,9 +454,6 @@ export default function LibrarianView({ logout, editProfile }) {
                         <th scope="col" class="hidden md:table-cell px-6 py-3">
                           Gender
                         </th>
-                        <th scope="col" class="hidden md:table-cell px-6 py-3">
-                          Joined on
-                        </th>
 
                         <th scope="col" class="px-6 py-3">
                           Action
@@ -353,11 +462,7 @@ export default function LibrarianView({ logout, editProfile }) {
                     </thead>
                   )}
 
-                  <tbody>
-                    {dropDownFormData === "books"
-                      ? entityList.books
-                      : entityList.members}
-                  </tbody>
+                  <tbody>{toBeRenderedEntityList}</tbody>
                 </table>
               </div>
 
