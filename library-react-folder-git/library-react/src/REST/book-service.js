@@ -2,7 +2,6 @@ export default class BookService {
   static baseUrl = process.env.REACT_APP_API_URL + "/books";
 
   static async search(searchKey, page) {
-    console.log("search book service");
     try {
       const response = await fetch(
         `${"http://localhost:8080/api/books"}?key=${searchKey}&&page=${page - 1}`,
@@ -14,7 +13,7 @@ export default class BookService {
           credentials: "include",
         }
       );
-      console.log("after fetch");
+
       if (response.status != 200) throw new Error();
       var responseBody = await response.json();
     } catch (error) {

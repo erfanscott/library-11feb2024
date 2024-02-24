@@ -162,6 +162,7 @@ export default function LibrarianView({ logout, editProfile }) {
           )
     );
     if (!entityList) {
+      console.log(entityListPage);
       if (entityListPage != 1) {
         setEntityListPage((prevEntityListPage) => prevEntityListPage - 1);
       }
@@ -197,6 +198,7 @@ export default function LibrarianView({ logout, editProfile }) {
       await MemberService.add(formData);
       toast.success("the user has been successfully added");
       setIsAddItemModalVisible(false);
+      updateEntityList();
     } catch (error) {
       toast.error(error.message);
     }
