@@ -1,6 +1,23 @@
 export default class BookService {
   static baseUrl = process.env.REACT_APP_API_URL + "/books";
 
+  static async fetchBookById(bookId) {
+    const response = await fetch(
+      `${"http://localhost:8080/api/books"}/${bookId}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+        },
+        credentials: "include",
+      }
+    );
+
+    if (response.status != 200) throw new Error();
+    const responseBody = await response.json();
+    return responseBody;
+  }
+
   static async search(searchKey, page) {
     try {
       const response = await fetch(

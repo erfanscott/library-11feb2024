@@ -11,45 +11,54 @@ import DetailsModal from "../modals/DetailsModal";
 import ConfirmationModal from "../modals/ConfirmationModal";
 
 export default function LibrarianView({ logout, editProfile }) {
+  const { auth, updateAuth } = useContext(AuthContext);
+  const { currentUser } = auth;
+  const usersName = currentUser.firstName;
+  const navigate = useNavigate();
+
+  /**
+   * handling members or book actions..........................................
+   */
   const [dropDownFormData, setDropDownFormData] = useState("books");
-  const [selectedItemId, setSelectedItemId] = useState(9);
 
-  const onDropDownFormChange = (e) => {
-    setDropDownFormData(e.target.value);
-  };
-
+  /**
+   * handling to be confirmed action and details functionality.................
+   */
+  const [toBeConfirmedAction, setToBeConfirmedAction] = useState(undefined);
+  const [isConfirmed, setIsConfirmed] = useState(false);
+  const [selectedItemId, setSelectedItemId] = useState(null);
+  /**
+   * handling rendered table...................................................
+   */
   const [entityListPage, setEntityListPage] = useState(1);
   const [entityList, setEntityList] = useState([]);
   const [toBeRenderedEntityList, setToBeRenderedEntityList] = useState([]);
   const [searchedKey, setSearchedKey] = useState("");
   const [isLastPage, setIsLastPage] = useState(false);
+  /**
+   * handling Modals...........................................................
+   */
+  const [isEditProfileModalVisible, setIsEditProfileModalVisible] =
+    useState(false);
+  const [isAddItemModalVisible, setIsAddItemModalVisible] = useState(false);
+  const [isDetailsModalVisible, setIsDetailsModalVisible] = useState(false);
+  const [isConfirmationModalVisible, setIsConfirmationModalVisible] =
+    useState(false);
 
-  async function searchBook(key, page) {
-    const result = await BookService.search(key, page);
-    return result;
-  }
-  async function searchMember(key, page) {
-    const result = await MemberService.search(key, page);
-    return result;
-  }
-
-  async function updateEntityList() {
-    try {
-      if (dropDownFormData === "books") {
-        setEntityList(await searchBook(searchedKey, entityListPage));
-      } else {
-        setEntityList(await searchMember(searchedKey, entityListPage));
-      }
-    } catch (error) {
-      toast.error(error.message);
-    }
-  }
-
+  /**
+   * Event Handlers............................................................
+   */
+  const onDropDownFormChange = (e) => {
+    setDropDownFormData(e.target.value);
+  };
   const searchOnChange = (e) => {
     setSearchedKey(e.target.value);
     setEntityListPage(1);
   };
 
+  /**
+   * SIDE EFFECTS AND STATE Interdependence........................
+   */
   useEffect(() => {
     updateEntityList();
   }, [entityListPage, searchedKey, dropDownFormData]);
@@ -91,7 +100,7 @@ export default function LibrarianView({ logout, editProfile }) {
                     onClick={(e) => {
                       e.stopPropagation();
                       setSelectedItemId(id);
-                      setToBeConfirmedAction(() => deleteItem);
+                      setToBeConfirmedAction("deleteItem");
                       setIsConfirmationModalVisible(true);
                     }}
                     className="py-2 px-2 inline cursor-pointer text-xs  font-medium text-white rounded bg-red-600 active:bg-red-800 dark:bg-red-500 hover:underline"
@@ -147,7 +156,7 @@ export default function LibrarianView({ logout, editProfile }) {
                     onClick={(e) => {
                       e.stopPropagation();
                       setSelectedItemId(id);
-                      setToBeConfirmedAction(() => deleteItem);
+                      setToBeConfirmedAction("deleteItem");
                       setIsConfirmationModalVisible(true);
                     }}
                     className="py-2 px-2 inline cursor-pointer text-xs  font-medium text-white rounded bg-red-600 active:bg-red-800 dark:bg-red-500 hover:underline"
@@ -181,23 +190,30 @@ export default function LibrarianView({ logout, editProfile }) {
     }
   }, [entityList]);
 
-  async function loadLibraryBooks() {}
+  useEffect(() => {
+    const confirmedAction = async () => {
+      try {
+        if (toBeConfirmedAction === "deleteItem") {
+          await deleteItem(selectedItemId);
+          await updateEntityList();
+          setIsConfirmed(false);
+        } else if (toBeConfirmedAction === "logOut") {
+          await logout();
+          await updateAuth();
+          setIsConfirmed(false);
+        }
+      } catch (error) {
+        toast.error(error.message);
+      }
+    };
+    if (isConfirmed) {
+      confirmedAction();
+    }
+  }, [isConfirmed]);
 
-  const navigate = useNavigate();
-
-  const { auth, updateAuth } = useContext(AuthContext);
-  const { currentUser } = auth;
-  const usersName = currentUser.firstName;
-
-  const [borrowedBooks, setBorrowedBooks] = useState([]);
-
-  const [isEditProfileModalVisible, setIsEditProfileModalVisible] =
-    useState(false);
-  const [isAddItemModalVisible, setIsAddItemModalVisible] = useState(false);
-  const [isDetailsModalVisible, setIsDetailsModalVisible] = useState(false);
-  const [isConfirmationModalVisible, setIsConfirmationModalVisible] =
-    useState(false);
-  const [toBeConfirmedAction, setToBeConfirmedAction] = useState(undefined);
+  /**
+   * Function definitions........................................................................
+   */
 
   async function addMember(formData) {
     try {
@@ -218,30 +234,32 @@ export default function LibrarianView({ logout, editProfile }) {
       toast.error(error.message);
     }
   }
-
-  async function deleteItem() {
+  async function deleteItem(ItemId) {
     console.log(selectedItemId);
+    if (dropDownFormData === "books") {
+      await BookService.delete(ItemId);
+    } else {
+      await MemberService.delete(ItemId);
+    }
+  }
+  async function searchBook(key, page) {
+    const result = await BookService.search(key, page);
+    return result;
+  }
+  async function searchMember(key, page) {
+    const result = await MemberService.search(key, page);
+    return result;
+  }
+  async function updateEntityList() {
     try {
       if (dropDownFormData === "books") {
-        await BookService.delete(selectedItemId);
+        setEntityList(await searchBook(searchedKey, entityListPage));
       } else {
-        await MemberService.delete(selectedItemId);
+        setEntityList(await searchMember(searchedKey, entityListPage));
       }
-      updateEntityList();
     } catch (error) {
       toast.error(error.message);
     }
-  }
-  async function deleteMember(formData) {
-    console.log("delete membre");
-    // try {
-    //   await UserService.updateProfile(formData, "MEMBER", currentUser.id);
-    //   toast.success("Your profile has been successfully updated");
-    //   setIsUpdateModalVisible(false);
-    //   updateAuth();
-    // } catch (error) {
-    //   toast.error(error.message);
-    // }
   }
 
   return (
@@ -256,7 +274,7 @@ export default function LibrarianView({ logout, editProfile }) {
         isVisible={isDetailsModalVisible}
         setIsVisible={setIsDetailsModalVisible}
         item={dropDownFormData === "books" ? "book" : "member"}
-        id={1}
+        id={selectedItemId}
       />
       <EditProfileModal
         isVisible={isEditProfileModalVisible}
@@ -266,7 +284,7 @@ export default function LibrarianView({ logout, editProfile }) {
       <ConfirmationModal
         isVisible={isConfirmationModalVisible}
         setIsVisible={setIsConfirmationModalVisible}
-        confirmedAction={toBeConfirmedAction}
+        setIsConfirmed={setIsConfirmed}
       />
 
       <section className="bg-gray-200 dark:bg-gray-900">
@@ -285,7 +303,7 @@ export default function LibrarianView({ logout, editProfile }) {
                   <div className="mt-4 tiny:mt-0 flex items-center space-x-2 flex-nowrap">
                     <button
                       onClick={() => {
-                        setToBeConfirmedAction(() => logout);
+                        setToBeConfirmedAction("logOut");
                         setIsConfirmationModalVisible(true);
                       }}
                       className="py-2 px-2 cursor-pointer text-xs  font-medium text-white rounded bg-red-600 active:bg-red-800 dark:bg-red-500 hover:underline"

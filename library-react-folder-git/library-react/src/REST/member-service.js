@@ -42,6 +42,23 @@ export default class MemberService {
       MemberService.baseUrl + `/?=` + `${this.#searchKey}`;
   }
 
+  static async fetchMemberById(MemberId) {
+    const response = await fetch(
+      `${"http://localhost:8080/api/members"}/${MemberId}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+        },
+        credentials: "include",
+      }
+    );
+
+    if (response.status != 200) throw new Error();
+    const responseBody = await response.json();
+    return responseBody;
+  }
+
   static async search(searchKey, page) {
     const response = await fetch(
       `${"http://localhost:8080/api/members"}?key=${searchKey}&&page=${page - 1}`,

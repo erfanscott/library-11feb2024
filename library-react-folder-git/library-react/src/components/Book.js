@@ -1,7 +1,7 @@
 import React from "react";
 
-export default function Book() {
-  const isAvailable = false;
+export default function Book({ book }) {
+  const { availability, name, authorName, borrowedBy } = book;
 
   return (
     <div className="">
@@ -17,7 +17,7 @@ export default function Book() {
         <tbody>
           <tr class=" bg-white border-b dark:bg-gray-800 dark:border-gray-700 ">
             <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-              <div class="text-base font-semibold">White Nights</div>
+              <div class="text-base font-semibold">{name}</div>
             </td>
           </tr>
         </tbody>
@@ -35,7 +35,7 @@ export default function Book() {
         <tbody>
           <tr class=" bg-white border-b dark:bg-gray-800 dark:border-gray-700">
             <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-              <div class="text-base font-semibold">Feyodor Dostoevsky</div>
+              <div class="text-base font-semibold">{authorName}</div>
             </td>
           </tr>
         </tbody>
@@ -56,10 +56,10 @@ export default function Book() {
               <div class="flex items-center">
                 <div
                   class={`h-2.5 w-2.5 rounded-full ${
-                    isAvailable ? "bg-green-500" : "bg-red-500"
+                    availability === "AVAILABLE" ? "bg-green-500" : "bg-red-500"
                   } me-2`}
                 ></div>{" "}
-                {isAvailable ? "AVAILABLE" : "BORROWED"}
+                {availability}
               </div>
             </td>
           </tr>
@@ -67,7 +67,7 @@ export default function Book() {
       </table>
       <table
         class={`${
-          isAvailable && "hidden"
+          availability === "AVAILABLE" && "hidden"
         } w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400`}
       >
         <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
@@ -81,7 +81,7 @@ export default function Book() {
         <tbody>
           <tr class=" bg-white border-b dark:bg-gray-800 dark:border-gray-700  ">
             <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-              <div class="text-base font-semibold">Erfan Mirhoseini</div>
+              <div class="text-base font-semibold">{`${borrowedBy.firstName}\t${borrowedBy.lastName}`}</div>
             </td>
           </tr>
         </tbody>
