@@ -58,6 +58,24 @@ export default class MemberService {
     return responseBody;
   }
 
+  static async delete(id) {
+    if (id == null) {
+      throw new Error("null input");
+    }
+    const response = await fetch(
+      `${"http://localhost:8080/api/members"}/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+        },
+        credentials: "include",
+      }
+    );
+
+    if (!(response.status >= 200 && response.status <= 299)) throw new Error();
+  }
+
   static async add(formData) {
     const bodyJson = JSON.stringify(formData);
     console.log(bodyJson);

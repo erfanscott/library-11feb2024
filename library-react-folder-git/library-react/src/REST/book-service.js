@@ -21,6 +21,23 @@ export default class BookService {
     }
     return responseBody;
   }
+  static async delete(bookId) {
+    if (bookId == null) {
+      throw new Error("null input");
+    }
+    const response = await fetch(
+      `${"http://localhost:8080/api/books"}/${bookId}`,
+      {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+        },
+        credentials: "include",
+      }
+    );
+
+    if (!(response.status >= 200 && response.status <= 299)) throw new Error();
+  }
 
   static async add(formData) {
     const bodyJson = JSON.stringify(formData);

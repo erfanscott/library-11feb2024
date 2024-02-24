@@ -12,6 +12,7 @@ import ConfirmationModal from "../modals/ConfirmationModal";
 
 export default function LibrarianView({ logout, editProfile }) {
   const [dropDownFormData, setDropDownFormData] = useState("books");
+  const [selectedItemId, setSelectedItemId] = useState(9);
 
   const onDropDownFormChange = (e) => {
     setDropDownFormData(e.target.value);
@@ -62,11 +63,13 @@ export default function LibrarianView({ logout, editProfile }) {
     setToBeRenderedEntityList(
       !entityList
         ? []
-        : entityList.map((entity) =>
-            dropDownFormData === "members" ? (
+        : entityList.map((entity) => {
+            const { id } = entity;
+            return dropDownFormData === "members" ? (
               <tr
                 key={`${entity.id}`}
                 onClick={() => {
+                  setSelectedItemId(id);
                   setIsDetailsModalVisible(true);
                 }}
                 class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 active:bg-gray-200 dark:hover:bg-gray-600"
@@ -87,7 +90,8 @@ export default function LibrarianView({ logout, editProfile }) {
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      setToBeConfirmedAction(() => deleteMember);
+                      setSelectedItemId(id);
+                      setToBeConfirmedAction(() => deleteItem);
                       setIsConfirmationModalVisible(true);
                     }}
                     className="py-2 px-2 inline cursor-pointer text-xs  font-medium text-white rounded bg-red-600 active:bg-red-800 dark:bg-red-500 hover:underline"
@@ -97,7 +101,7 @@ export default function LibrarianView({ logout, editProfile }) {
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-
+                      setSelectedItemId(id);
                       setIsDetailsModalVisible(true);
                     }}
                     className="py-2 px-2 inline cursor-pointer text-xs font-medium text-white rounded bg-blue-600 active:bg-blue-800 dark:bg-blue-500 hover:underline"
@@ -110,6 +114,7 @@ export default function LibrarianView({ logout, editProfile }) {
               <tr
                 key={`${entity.id}`}
                 onClick={() => {
+                  setSelectedItemId(id);
                   setIsDetailsModalVisible(true);
                 }}
                 class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 active:bg-gray-200 dark:hover:bg-gray-600"
@@ -141,7 +146,8 @@ export default function LibrarianView({ logout, editProfile }) {
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      setToBeConfirmedAction(() => deleteBook);
+                      setSelectedItemId(id);
+                      setToBeConfirmedAction(() => deleteItem);
                       setIsConfirmationModalVisible(true);
                     }}
                     className="py-2 px-2 inline cursor-pointer text-xs  font-medium text-white rounded bg-red-600 active:bg-red-800 dark:bg-red-500 hover:underline"
@@ -150,6 +156,7 @@ export default function LibrarianView({ logout, editProfile }) {
                   </button>
                   <button
                     onClick={() => {
+                      setSelectedItemId(id);
                       setIsDetailsModalVisible(true);
                     }}
                     className="py-2 px-2 inline cursor-pointer text-xs font-medium text-white rounded bg-blue-600 active:bg-blue-800 dark:bg-blue-500 hover:underline"
@@ -158,8 +165,8 @@ export default function LibrarianView({ logout, editProfile }) {
                   </button>
                 </td>
               </tr>
-            )
-          )
+            );
+          })
     );
     if (!entityList) {
       console.log(entityListPage);
@@ -168,7 +175,6 @@ export default function LibrarianView({ logout, editProfile }) {
       }
       setIsLastPage(true);
     } else if (entityList && entityList.length < 10) {
-      console.log(entityListPage);
       setIsLastPage(true);
     } else {
       setIsLastPage(false);
@@ -212,16 +218,19 @@ export default function LibrarianView({ logout, editProfile }) {
       toast.error(error.message);
     }
   }
-  async function deleteBook(formData) {
-    console.log("delete book");
-    // try {
-    //   await UserService.updateProfile(formData, "MEMBER", currentUser.id);
-    //   toast.success("Your profile has been successfully updated");
-    //   setIsUpdateModalVisible(false);
-    //   updateAuth();
-    // } catch (error) {
-    //   toast.error(error.message);
-    // }
+
+  async function deleteItem() {
+    console.log(selectedItemId);
+    try {
+      if (dropDownFormData === "books") {
+        await BookService.delete(selectedItemId);
+      } else {
+        await MemberService.delete(selectedItemId);
+      }
+      updateEntityList();
+    } catch (error) {
+      toast.error(error.message);
+    }
   }
   async function deleteMember(formData) {
     console.log("delete membre");
