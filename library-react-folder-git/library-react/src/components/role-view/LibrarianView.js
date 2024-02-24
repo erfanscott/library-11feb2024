@@ -264,28 +264,38 @@ export default function LibrarianView({ logout, editProfile }) {
 
   return (
     <div>
-      <AddItemModal
-        isVisible={isAddItemModalVisible}
-        setIsVisible={setIsAddItemModalVisible}
-        item={dropDownFormData === "books" ? "book" : "member"}
-        addItemCallback={dropDownFormData === "books" ? addBook : addMember}
-      />
-      <DetailsModal
-        isVisible={isDetailsModalVisible}
-        setIsVisible={setIsDetailsModalVisible}
-        item={dropDownFormData === "books" ? "book" : "member"}
-        id={selectedItemId}
-      />
-      <EditProfileModal
-        isVisible={isEditProfileModalVisible}
-        setIsVisible={setIsEditProfileModalVisible}
-        updateProfileCallBack={editProfile}
-      />
-      <ConfirmationModal
-        isVisible={isConfirmationModalVisible}
-        setIsVisible={setIsConfirmationModalVisible}
-        setIsConfirmed={setIsConfirmed}
-      />
+      {isAddItemModalVisible && (
+        <AddItemModal
+          isVisible={isAddItemModalVisible}
+          setIsVisible={setIsAddItemModalVisible}
+          item={dropDownFormData === "books" ? "book" : "member"}
+          addItemCallback={dropDownFormData === "books" ? addBook : addMember}
+        />
+      )}
+
+      {isDetailsModalVisible && (
+        <DetailsModal
+          isVisible={isDetailsModalVisible}
+          setIsVisible={setIsDetailsModalVisible}
+          item={dropDownFormData === "books" ? "book" : "member"}
+          id={selectedItemId}
+        />
+      )}
+      {isEditProfileModalVisible && (
+        <EditProfileModal
+          isVisible={isEditProfileModalVisible}
+          setIsVisible={setIsEditProfileModalVisible}
+          updateProfileCallBack={editProfile}
+          user={currentUser}
+        />
+      )}
+      {isConfirmationModalVisible && (
+        <ConfirmationModal
+          isVisible={isConfirmationModalVisible}
+          setIsVisible={setIsConfirmationModalVisible}
+          setIsConfirmed={setIsConfirmed}
+        />
+      )}
 
       <section className="bg-gray-200 dark:bg-gray-900">
         <div className="flex flex-col items-center px-4 py-6 [@media(min-width:400px)]:px-6 [@media(min-width:660px)]:py-8 mx-auto md:h-screen">

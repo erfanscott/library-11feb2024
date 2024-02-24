@@ -1,7 +1,7 @@
 import React from "react";
 
-export default function Member() {
-  const isAvailable = false;
+export default function Member({ member }) {
+  const { firstName, lastName, borrowedBooks, gender, email } = member;
 
   return (
     <div className="">
@@ -17,7 +17,7 @@ export default function Member() {
         <tbody>
           <tr class=" bg-white border-b dark:bg-gray-800 dark:border-gray-700 ">
             <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-              <div class="text-base font-semibold">Erfan Mirhoseini</div>
+              <div class="text-base font-semibold">{`${firstName}\t${lastName}`}</div>
             </td>
           </tr>
         </tbody>
@@ -35,7 +35,7 @@ export default function Member() {
         <tbody>
           <tr class=" bg-white border-b dark:bg-gray-800 dark:border-gray-700 ">
             <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-              <div class="text-base font-semibold">erfanscott@gmail.com</div>
+              <div class="text-base font-semibold">{email}</div>
             </td>
           </tr>
         </tbody>
@@ -53,7 +53,7 @@ export default function Member() {
         <tbody>
           <tr class=" bg-white border-b dark:bg-gray-800 dark:border-gray-700  ">
             <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-              <div class="text-base font-semibold">Male</div>
+              <div class="text-base font-semibold">{gender}</div>
             </td>
           </tr>
         </tbody>
@@ -70,36 +70,14 @@ export default function Member() {
         </thead>
 
         <tbody className="">
-          <tr class=" bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-            <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-              <div class="text-base font-semibold">Notes from Underground Notes from Underground Notes from Underground</div>
-            </td>
-          </tr>
-          <tr class=" bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-            <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-              <div class="text-base font-semibold">Notes from Underground</div>
-            </td>
-          </tr>
-          <tr class=" bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-            <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-              <div class="text-base font-semibold">Notes from Underground</div>
-            </td>
-          </tr>
-          <tr class=" bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-            <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-              <div class="text-base font-semibold">Notes from Underground</div>
-            </td>
-          </tr>
-          <tr class=" bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-            <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-              <div class="text-base font-semibold">Notes from Underground</div>
-            </td>
-          </tr>
-          <tr class=" bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-            <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-              <div class="text-base font-semibold">Notes from Underground</div>
-            </td>
-          </tr>
+          {borrowedBooks &&
+            borrowedBooks.map((book) => (
+              <tr class=" bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                  <div class="text-base font-semibold">{book.name}</div>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>

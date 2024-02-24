@@ -4,12 +4,13 @@ export default function EditProfileModal({
   isVisible,
   setIsVisible,
   updateProfileCallBack,
+  user,
 }) {
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-  });
+  const [formData, setFormData] = useState(() => ({
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+  }));
   const { firstName, lastName, email } = formData;
 
   const onFormChange = (e) => {

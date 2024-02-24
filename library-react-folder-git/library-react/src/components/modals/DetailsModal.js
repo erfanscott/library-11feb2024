@@ -9,7 +9,7 @@ export default function DetailsModal({ isVisible, setIsVisible, item, id }) {
   const [toBeShownEntity, setToBeShownEntity] = useState(null);
 
   async function fetchToBeShownEntity() {
-    if (item === "books") {
+    if (item === "book") {
       setToBeShownEntity(await BookService.fetchBookById(id));
     } else {
       setToBeShownEntity(await MemberService.fetchMemberById(id));
