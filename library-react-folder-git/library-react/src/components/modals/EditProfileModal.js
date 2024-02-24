@@ -36,6 +36,7 @@ export default function EditProfileModal({
             class=""
             onSubmit={(e) => {
               e.preventDefault();
+              setIsVisible(false);
               updateProfileCallBack(formData);
             }}
           >

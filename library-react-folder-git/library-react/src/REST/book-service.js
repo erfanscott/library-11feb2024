@@ -18,6 +18,7 @@ export default class BookService {
     return responseBody;
   }
 
+  /********************************************************Remove the try catch */
   static async search(searchKey, page) {
     try {
       const response = await fetch(
@@ -38,6 +39,24 @@ export default class BookService {
     }
     return responseBody;
   }
+
+  static async searchBorrowedByMember(searchKey, page, memberId) {
+    const response = await fetch(
+      `${"http://localhost:8080/api/books"}/borrowed-by?key=${searchKey}&&borrowedBy=${memberId}&&page=${page - 1}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+        },
+        credentials: "include",
+      }
+    );
+
+    if (response.status != 200) throw new Error();
+    const responseBody = await response.json();
+    return responseBody;
+  }
+
   static async delete(bookId) {
     if (bookId == null) {
       throw new Error("null input");

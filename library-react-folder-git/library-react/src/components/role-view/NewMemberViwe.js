@@ -15,116 +15,294 @@ import ConfirmationModal from "../modals/ConfirmationModal";
 export default function NewMemberView({ logout, editProfile }) {
   const navigate = useNavigate();
 
+  const [dropDownFormData, setDropDownFormData] = useState("all-books");
+
   const { auth, updateAuth } = useContext(AuthContext);
   const { currentUser } = auth;
   const usersName = currentUser.firstName;
   const [borrowedBooks, setBorrowedBooks] = useState([]);
 
+  const [toBeConfirmedAction, setToBeConfirmedAction] = useState(undefined);
+  const [isConfirmed, setIsConfirmed] = useState(false);
+  const [selectedItemId, setSelectedItemId] = useState(null);
+
   const [isEditProfileModalVisible, setIsEditProfileModalVisible] =
     useState(false);
+  const [isAddItemModalVisible, setIsAddItemModalVisible] = useState(false);
   const [isDetailsModalVisible, setIsDetailsModalVisible] = useState(false);
   const [isConfirmationModalVisible, setIsConfirmationModalVisible] =
     useState(false);
-  const [toBeConfirmedAction, setToBeConfirmedAction] = useState(() => {});
 
-  async function updateProfile(formData) {
-    // try {
-    //   await UserService.updateProfile(formData, "MEMBER", currentUser.id);
-    //   toast.success("Your profile has been successfully updated");
-    //   setIsUpdateModalVisible(false);
-    //   updateAuth();
-    // } catch (error) {
-    //   toast.error(error.message);
-    // }
-  }
-
-  const [dropDownFormData, setDropDownFormData] = useState("books");
-
+  const [entityListPage, setEntityListPage] = useState(1);
+  const [entityList, setEntityList] = useState([]);
+  const [toBeRenderedEntityList, setToBeRenderedEntityList] = useState([]);
+  const [searchedKey, setSearchedKey] = useState("");
+  const [isLastPage, setIsLastPage] = useState(false);
+  /******************************************************************* */
   const onDropDownFormChange = (e) => {
     setDropDownFormData(e.target.value);
   };
+  const searchOnChange = (e) => {
+    setSearchedKey(e.target.value);
+    setEntityListPage(1);
+  };
 
-  const [entityListPage, setEntityListPage] = useState(1);
+  /**************************************************************** */
 
-  const entityList = [];
+  useEffect(() => {
+    updateEntityList();
+  }, [entityListPage, searchedKey, dropDownFormData]);
 
-  for (let i = 0; i < 3; i++) {
-    let isAvailable;
-    isAvailable = i % 2 === 0 ? true : false;
+  useEffect(() => {
+    setSearchedKey("");
+    setEntityListPage(1);
+  }, [dropDownFormData]);
 
-    entityList.push(
-      <tr
-        onClick={() => {}}
-        class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 active:bg-gray-200 dark:hover:bg-gray-600"
-      >
-        <td class="px-2 py-4 font-bold">1</td>
+  useEffect(() => {
+    setToBeRenderedEntityList(
+      !entityList
+        ? []
+        : entityList.map((entity) => {
+            const { id } = entity;
+            return (
+              <tr
+                key={`${id}`}
+                onClick={() => {
+                  setSelectedItemId(id);
+                  setIsDetailsModalVisible(true);
+                }}
+                class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 active:bg-gray-200 dark:hover:bg-gray-600"
+              >
+                <td class="px-2 py-4 font-bold">{id}</td>
 
-        <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-          <div class="">
-            <div class="text-base font-semibold">White Nights</div>
-            <div class="font-normal text-gray-500">
-              Fyodor Mikhailovich Dostoevsky
-            </div>
-          </div>
-        </td>
+                <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                  <div class="">
+                    <div class="text-base font-semibold">{entity.name}</div>
+                    <div class="font-normal text-gray-500">
+                      {entity.authorName}
+                    </div>
+                  </div>
+                </td>
 
-        <td class="hidden md:table-cell px-6 py-4">
-          <div class="flex items-center">
-            <div
-              class={`h-2.5 w-2.5 rounded-full ${
-                isAvailable ? "bg-green-500" : "bg-red-500"
-              } me-2`}
-            ></div>{" "}
-            {isAvailable ? "AVAILABLE" : "BORROWED"}
-          </div>
-        </td>
-        <td class="px-6 py-4 flex items-end space-x-2">
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setIsConfirmationModalVisible(true);
-            }}
-            className={`${
-              isAvailable
-                ? "bg-pink-700 active:bg-pink-900"
-                : "bg-violet-700 active:bg-violet-900"
-            } py-2 px-2 cursor-pointer text-xs font-medium text-white rounded bg-blue-600 dark:bg-blue-500 hover:underline`}
-          >
-            {isAvailable ? "Borrow" : "Return"}
-          </button>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setIsDetailsModalVisible(true);
-            }}
-            className="py-2 px-2 cursor-pointer text-xs font-medium text-white rounded bg-blue-600 active:bg-blue-800 dark:bg-blue-500 hover:underline"
-          >
-            details
-          </button>
-        </td>
-      </tr>
+                <td class="hidden md:table-cell px-6 py-4">
+                  <div class="flex items-center">
+                    <div
+                      class={`h-2.5 w-2.5 rounded-full ${
+                        entity.availability === "AVAILABLE"
+                          ? "bg-green-500"
+                          : "bg-red-500"
+                      } me-2`}
+                    ></div>{" "}
+                    {entity.availability}
+                  </div>
+                </td>
+                <td class="px-6 py-4 flex items-end space-x-2">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (
+                        entity.borrowedBy &&
+                        entity.borrowedBy.id != currentUser.id
+                      ) {
+                        return;
+                      }
+                      setToBeConfirmedAction(
+                        entity.availability === "AVAILABLE"
+                          ? "borrowBook"
+                          : "returnBook"
+                      );
+                      setSelectedItemId(id);
+                      setIsConfirmationModalVisible(true);
+                    }}
+                    className={`${
+                      entity.availability === "AVAILABLE"
+                        ? "bg-pink-700 active:bg-pink-900"
+                        : entity.borrowedBy.id == currentUser.id
+                          ? "bg-violet-700 active:bg-violet-900"
+                          : "bg-pink-200"
+                    } py-2 px-2 cursor-pointer text-xs font-medium text-white rounded bg-blue-600 dark:bg-blue-500 hover:underline`}
+                  >
+                    {entity.availability === "AVAILABLE"
+                      ? "Borrow"
+                      : entity.borrowedBy.id == currentUser.id
+                        ? "Return"
+                        : "Borrow"}
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedItemId(id);
+                      setIsDetailsModalVisible(true);
+                    }}
+                    className="py-2 px-2 cursor-pointer text-xs font-medium text-white rounded bg-blue-600 active:bg-blue-800 dark:bg-blue-500 hover:underline"
+                  >
+                    Details
+                  </button>
+                </td>
+              </tr>
+            );
+          })
     );
+    if (!entityList) {
+      console.log(entityListPage);
+      if (entityListPage != 1) {
+        setEntityListPage((prevEntityListPage) => prevEntityListPage - 1);
+      }
+      setIsLastPage(true);
+    } else if (entityList && entityList.length < 10) {
+      setIsLastPage(true);
+    } else {
+      setIsLastPage(false);
+    }
+  }, [entityList]);
+
+  useEffect(() => {
+    const confirmedAction = async () => {
+      console.log("WAS IN CONFIRMED ACTION");
+      console.log(toBeConfirmedAction);
+      try {
+        if (toBeConfirmedAction === "returnBook") {
+          await returnBook(selectedItemId);
+          await updateEntityList();
+          toast.success("the book has been successfully returned");
+          setIsConfirmed(false);
+        } else if (toBeConfirmedAction === "logOut") {
+          await logout();
+          await updateAuth();
+          toast.success("You have logged out");
+          setIsConfirmed(false);
+        } else if (toBeConfirmedAction === "borrowBook") {
+          await borrowBook(selectedItemId);
+          await updateEntityList();
+          toast.success("the book has been successfully borrowed");
+          setIsConfirmed(false);
+        }
+      } catch (error) {
+        toast.error(error.message);
+      }
+    };
+    if (isConfirmed) {
+      confirmedAction();
+    }
+  }, [isConfirmed]);
+
+  async function borrowBook(bookId) {
+    await new MemberService({}).borrowBook(currentUser.id, bookId);
   }
+
+  async function returnBook(bookId) {
+    await new MemberService({}).returnBook(currentUser.id, bookId);
+  }
+
+  async function searchBook(searchKey, page) {
+    const result = await BookService.search(searchKey, page);
+    return result;
+  }
+
+  async function searchBorrowedBooks(searchKey, page) {
+    const result = await BookService.searchBorrowedByMember(
+      searchKey,
+      page,
+      currentUser.id
+    );
+    return result;
+  }
+
+  async function updateEntityList() {
+    try {
+      if (dropDownFormData === "all-books") {
+        setEntityList(await searchBook(searchedKey, entityListPage));
+      } else {
+        setEntityList(await searchBorrowedBooks(searchedKey, entityListPage));
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  }
+
+  // for (let i = 0; i < 3; i++) {
+  //   let isAvailable;
+  //   isAvailable = i % 2 === 0 ? true : false;
+
+  //   entityList.push(
+  //     <tr
+  //       onClick={() => {}}
+  //       class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 active:bg-gray-200 dark:hover:bg-gray-600"
+  //     >
+  //       <td class="px-2 py-4 font-bold">1</td>
+
+  //       <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+  //         <div class="">
+  //           <div class="text-base font-semibold">White Nights</div>
+  //           <div class="font-normal text-gray-500">
+  //             Fyodor Mikhailovich Dostoevsky
+  //           </div>
+  //         </div>
+  //       </td>
+
+  //       <td class="hidden md:table-cell px-6 py-4">
+  //         <div class="flex items-center">
+  //           <div
+  //             class={`h-2.5 w-2.5 rounded-full ${
+  //               isAvailable ? "bg-green-500" : "bg-red-500"
+  //             } me-2`}
+  //           ></div>{" "}
+  //           {isAvailable ? "AVAILABLE" : "BORROWED"}
+  //         </div>
+  //       </td>
+  //       <td class="px-6 py-4 flex items-end space-x-2">
+  //         <button
+  //           onClick={(e) => {
+  //             e.stopPropagation();
+  //             setIsConfirmationModalVisible(true);
+  //           }}
+  //           className={`${
+  //             isAvailable
+  //               ? "bg-pink-700 active:bg-pink-900"
+  //               : "bg-violet-700 active:bg-violet-900"
+  //           } py-2 px-2 cursor-pointer text-xs font-medium text-white rounded bg-blue-600 dark:bg-blue-500 hover:underline`}
+  //         >
+  //           {isAvailable ? "Borrow" : "Return"}
+  //         </button>
+  //         <button
+  //           onClick={(e) => {
+  //             e.stopPropagation();
+  //             setIsDetailsModalVisible(true);
+  //           }}
+  //           className="py-2 px-2 cursor-pointer text-xs font-medium text-white rounded bg-blue-600 active:bg-blue-800 dark:bg-blue-500 hover:underline"
+  //         >
+  //           details
+  //         </button>
+  //       </td>
+  //     </tr>
+  //   );
+  // }
 
   return (
     <div>
-      {" "}
-      <DetailsModal
-        isVisible={isDetailsModalVisible}
-        setIsVisible={setIsDetailsModalVisible}
-        item={dropDownFormData === "books" ? "book" : "member"}
-        id={1}
-      />
-      <EditProfileModal
-        isVisible={isEditProfileModalVisible}
-        setIsVisible={setIsEditProfileModalVisible}
-        updateProfileCallBack={editProfile}
-      />
-      <ConfirmationModal
-        isVisible={isConfirmationModalVisible}
-        setIsVisible={setIsConfirmationModalVisible}
-        confirmedAction={toBeConfirmedAction}
-      />
+      {isDetailsModalVisible && (
+        <DetailsModal
+          isVisible={isDetailsModalVisible}
+          setIsVisible={setIsDetailsModalVisible}
+          item={"book"}
+          id={selectedItemId}
+        />
+      )}
+      {isEditProfileModalVisible && (
+        <EditProfileModal
+          isVisible={isEditProfileModalVisible}
+          setIsVisible={setIsEditProfileModalVisible}
+          updateProfileCallBack={editProfile}
+          user={currentUser}
+        />
+      )}
+      {isConfirmationModalVisible && (
+        <ConfirmationModal
+          isVisible={isConfirmationModalVisible}
+          setIsVisible={setIsConfirmationModalVisible}
+          setIsConfirmed={setIsConfirmed}
+        />
+      )}
       <section className="bg-gray-200 dark:bg-gray-900">
         <div className="flex flex-col items-center px-4 py-6 [@media(min-width:400px)]:px-6 [@media(min-width:660px)]:py-8 mx-auto md:h-screen">
           <div className="w-full bg-white rounded-md sm:rounded-lg shadow dark:border md:mt-0 max-w-5xl xl:p-0 dark:bg-gray-800 dark:border-gray-700">
@@ -141,7 +319,7 @@ export default function NewMemberView({ logout, editProfile }) {
                   <div className="mt-4 tiny:mt-0 flex items-center space-x-2 flex-nowrap">
                     <button
                       onClick={() => {
-                        setToBeConfirmedAction(() => logout);
+                        setToBeConfirmedAction("logOut");
                         setIsConfirmationModalVisible(true);
                       }}
                       className=" py-2 px-2 cursor-pointer text-xs  font-medium text-white rounded bg-red-600 active:bg-red-800 dark:bg-red-500 hover:underline"
@@ -199,9 +377,10 @@ export default function NewMemberView({ logout, editProfile }) {
                       </svg>
                     </div>
                     <input
-                      onChange
+                      onChange={searchOnChange}
                       type="search"
                       id="default-search"
+                      value={searchedKey}
                       class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="book id, name, author..."
                     />
@@ -227,13 +406,14 @@ export default function NewMemberView({ logout, editProfile }) {
                     </tr>
                   </thead>
 
-                  <tbody>{entityList}</tbody>
+                  <tbody>{toBeRenderedEntityList}</tbody>
                 </table>
               </div>
 
               <nav class="pt-4" aria-label="Table navigation">
                 <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
                   <li
+                    className={`${entityListPage === 1 ? "hidden" : ""}`}
                     onClick={() => {
                       setEntityListPage((prevEntityListPage) =>
                         prevEntityListPage !== 1
@@ -253,6 +433,7 @@ export default function NewMemberView({ logout, editProfile }) {
                   </li>
 
                   <li
+                    className={`${isLastPage ? "hidden" : ""}`}
                     onClick={() => {
                       setEntityListPage(
                         (prevEntityListPage) => prevEntityListPage + 1
