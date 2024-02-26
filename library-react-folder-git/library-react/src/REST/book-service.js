@@ -2,16 +2,13 @@ export default class BookService {
   static baseUrl = process.env.REACT_APP_API_URL + "/books";
 
   static async fetchBookById(bookId) {
-    const response = await fetch(
-      `${"http://localhost:8080/api/books"}/${bookId}`,
-      {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-        },
-        credentials: "include",
-      }
-    );
+    const response = await fetch(`${BookService.baseUrl}/${bookId}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+      credentials: "include",
+    });
 
     if (response.status != 200) throw new Error();
     const responseBody = await response.json();
@@ -22,7 +19,7 @@ export default class BookService {
   static async search(searchKey, page) {
     try {
       const response = await fetch(
-        `${"http://localhost:8080/api/books"}?key=${searchKey}&&page=${page - 1}`,
+        `${BookService.baseUrl}?key=${searchKey}&&page=${page - 1}`,
         {
           method: "GET",
           headers: {
@@ -42,7 +39,7 @@ export default class BookService {
 
   static async searchBorrowedByMember(searchKey, page, memberId) {
     const response = await fetch(
-      `${"http://localhost:8080/api/books"}/borrowed-by?key=${searchKey}&&borrowedBy=${memberId}&&page=${page - 1}`,
+      `${BookService.baseUrl}/borrowed-by?key=${searchKey}&&borrowedBy=${memberId}&&page=${page - 1}`,
       {
         method: "GET",
         headers: {
@@ -61,16 +58,13 @@ export default class BookService {
     if (bookId == null) {
       throw new Error("null input");
     }
-    const response = await fetch(
-      `${"http://localhost:8080/api/books"}/${bookId}`,
-      {
-        method: "DELETE",
-        headers: {
-          Accept: "application/json",
-        },
-        credentials: "include",
-      }
-    );
+    const response = await fetch(`${BookService.baseUrl}/${bookId}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+      },
+      credentials: "include",
+    });
 
     if (!(response.status >= 200 && response.status <= 299)) throw new Error();
   }
@@ -79,7 +73,7 @@ export default class BookService {
     const bodyJson = JSON.stringify(formData);
     console.log(bodyJson);
 
-    const response = await fetch("http://localhost:8080/api/books/", {
+    const response = await fetch(BookService.baseUrl, {
       method: "POST",
       headers: {
         Accept: "application/json",

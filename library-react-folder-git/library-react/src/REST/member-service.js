@@ -43,16 +43,13 @@ export default class MemberService {
   }
 
   static async fetchMemberById(MemberId) {
-    const response = await fetch(
-      `${"http://localhost:8080/api/members"}/${MemberId}`,
-      {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-        },
-        credentials: "include",
-      }
-    );
+    const response = await fetch(`${MemberService.baseUrl}/${MemberId}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+      credentials: "include",
+    });
 
     if (response.status != 200) throw new Error();
     const responseBody = await response.json();
@@ -61,7 +58,7 @@ export default class MemberService {
 
   static async search(searchKey, page) {
     const response = await fetch(
-      `${"http://localhost:8080/api/members"}?key=${searchKey}&&page=${page - 1}`,
+      `${MemberService.baseUrl}?key=${searchKey}&&page=${page - 1}`,
       {
         method: "GET",
         headers: {
@@ -79,16 +76,13 @@ export default class MemberService {
     if (id == null) {
       throw new Error("null input");
     }
-    const response = await fetch(
-      `${"http://localhost:8080/api/members"}/${id}`,
-      {
-        method: "DELETE",
-        headers: {
-          Accept: "application/json",
-        },
-        credentials: "include",
-      }
-    );
+    const response = await fetch(`${MemberService.baseUrl}/${id}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+      },
+      credentials: "include",
+    });
 
     if (!(response.status >= 200 && response.status <= 299)) throw new Error();
   }
@@ -97,7 +91,7 @@ export default class MemberService {
     const bodyJson = JSON.stringify(formData);
     console.log(bodyJson);
 
-    const response = await fetch("http://localhost:8080/api/members/", {
+    const response = await fetch(`${MemberService.baseUrl}/`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -107,7 +101,8 @@ export default class MemberService {
 
       credentials: "include",
     });
-    if (response.status != 200) throw new Error("Adding member failed");
+    const responseBody = await response.json();
+    if (response.status != 200) throw new Error(responseBody.message);
   }
 
   async getMembers() {

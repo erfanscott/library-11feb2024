@@ -195,6 +195,7 @@ export default function LibrarianView({ logout, editProfile }) {
       try {
         if (toBeConfirmedAction === "deleteItem") {
           await deleteItem(selectedItemId);
+          toast.success("The item has been successfully removed");
           await updateEntityList();
           setIsConfirmed(false);
         } else if (toBeConfirmedAction === "logOut") {

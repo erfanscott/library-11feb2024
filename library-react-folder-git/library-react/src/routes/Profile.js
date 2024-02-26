@@ -20,6 +20,7 @@ export default function Profile() {
   const logout = async () => {
     try {
       await new AuthService({}).logOut();
+      toast.success("Hope to see you soon");
       updateAuth();
     } catch (error) {
       console.log("Could not log out");

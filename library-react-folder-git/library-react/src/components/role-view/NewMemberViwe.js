@@ -169,7 +169,6 @@ export default function NewMemberView({ logout, editProfile }) {
         } else if (toBeConfirmedAction === "logOut") {
           await logout();
           await updateAuth();
-          toast.success("You have logged out");
           setIsConfirmed(false);
         } else if (toBeConfirmedAction === "borrowBook") {
           await borrowBook(selectedItemId);

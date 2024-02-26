@@ -84,9 +84,12 @@ export default function EditProfileModal({
             <div class="mb-8">
               <label
                 for="email"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                class="flex flex-wrap items-center gap-1 mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Your email
+                Your email{`\t`}{" "}
+                <span className="text-xs text-red-600 whitespace-nowrap">
+                  (Re-authentication needed if changed)
+                </span>
               </label>
               <input
                 type="email"
