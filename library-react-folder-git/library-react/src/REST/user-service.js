@@ -1,5 +1,5 @@
 export default class UserService {
-  static baseUrl = "http://localhost:8080/api";
+  static baseUrl = "http://37.152.188.66:8080/api";
 
   static async EditProfile(formData, role, id) {
     const bodyJson = JSON.stringify(formData);

@@ -1,5 +1,5 @@
 export default class MemberService {
-  static baseUrl = "http://localhost:8080/api" + "/members";
+  static baseUrl = "http://37.152.188.66:8080/api" + "/members";
 
   #targetMemberId;
   #targetBookId;

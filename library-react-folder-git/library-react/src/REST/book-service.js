@@ -1,5 +1,5 @@
 export default class BookService {
-  static baseUrl = "http://localhost:8080/api" + "/books";
+  static baseUrl = "http://37.152.188.66:8080/api" + "/books";
 
   static async fetchBookById(bookId) {
     const response = await fetch(`${BookService.baseUrl}/${bookId}`, {

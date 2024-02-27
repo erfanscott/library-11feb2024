@@ -1,5 +1,5 @@
 export default class AuthService {
-  static baseUrl = "http://localhost:8080/api" + "/auth";
+  static baseUrl = "http://37.152.188.66:8080/api" + "/auth";
   #username;
   #password;
 
@@ -67,7 +67,7 @@ export default class AuthService {
   }
 
   async logOut() {
-    const response = await fetch(`${"http://localhost:8080"}/logout`, {
+    const response = await fetch(`${"http://37.152.188.66:8080"}/logout`, {
       method: "POST",
       headers: {
         Accept: "application/json",
