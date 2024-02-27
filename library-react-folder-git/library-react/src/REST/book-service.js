@@ -73,7 +73,7 @@ export default class BookService {
     const bodyJson = JSON.stringify(formData);
     console.log(bodyJson);
 
-    const response = await fetch(BookService.baseUrl, {
+    const response = await fetch(BookService.baseUrl + "/", {
       method: "POST",
       headers: {
         Accept: "application/json",
