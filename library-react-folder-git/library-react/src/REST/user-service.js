@@ -1,5 +1,5 @@
 export default class UserService {
-  static baseUrl = process.env.REACT_APP_API_URL;
+  static baseUrl = "http://localhost:8080/api";
 
   static async EditProfile(formData, role, id) {
     const bodyJson = JSON.stringify(formData);

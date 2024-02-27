@@ -1,5 +1,5 @@
 export default class AuthService {
-  static baseUrl = process.env.REACT_APP_API_URL + "/auth";
+  static baseUrl = "http://localhost:8080/api" + "/auth";
   #username;
   #password;
 
@@ -67,17 +67,14 @@ export default class AuthService {
   }
 
   async logOut() {
-    const response = await fetch(
-      `${process.env.REACT_APP_BACK_END_SERVER_URL}/logout`,
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          //Authorization: `Basic ${btoa(`${this.#username}:${this.#password}`)}`,
-        },
-        credentials: "include",
-      }
-    );
+    const response = await fetch(`${"http://localhost:8080"}/logout`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        //Authorization: `Basic ${btoa(`${this.#username}:${this.#password}`)}`,
+      },
+      credentials: "include",
+    });
 
     if (!(response.status >= 200 && response.status <= 299)) throw new Error();
   }

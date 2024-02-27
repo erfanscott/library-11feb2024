@@ -1,5 +1,5 @@
 export default class BookService {
-  static baseUrl = process.env.REACT_APP_API_URL + "/books";
+  static baseUrl = "http://localhost:8080/api" + "/books";
 
   static async fetchBookById(bookId) {
     const response = await fetch(`${BookService.baseUrl}/${bookId}`, {

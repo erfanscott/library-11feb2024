@@ -1,5 +1,5 @@
 export default class MemberService {
-  static baseUrl = process.env.REACT_APP_API_URL + "/members";
+  static baseUrl = "http://localhost:8080/api" + "/members";
 
   #targetMemberId;
   #targetBookId;
