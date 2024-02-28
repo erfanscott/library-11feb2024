@@ -75,7 +75,7 @@ export default function NewMemberView({ logout, editProfile }) {
               >
                 <td class="px-2 py-4 font-bold">{id}</td>
 
-                <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                <td class="flex items-center max-w-[250px] whitespace-normal px-6 py-4 text-gray-900 dark:text-white">
                   <div class="">
                     <div class="text-base font-semibold">{entity.name}</div>
                     <div class="font-normal text-gray-500">
