@@ -11,8 +11,8 @@ export default function Register() {
     lastName: "",
     email: "",
     pwd: "",
-    gender: "",
-    role: "",
+    gender: "MALE",
+    role: "MEMBER",
   });
   const { firstName, lastName, email, pwd, gender, role } = formData;
 

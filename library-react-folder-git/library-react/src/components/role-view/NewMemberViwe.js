@@ -390,18 +390,12 @@ export default function NewMemberView({ logout, editProfile }) {
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                   <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                      <th scope="col" class="px-2 py-3">
-                        ID
-                      </th>
-                      <th scope="col" class="px-6 py-3">
+                      <th class="px-2 py-3">ID</th>
+                      <th class="inline-block px-6 py-3 max-w-[250px]">
                         Name / Author
                       </th>
-                      <th scope="col" class="hidden md:table-cell px-6 py-3">
-                        Status
-                      </th>
-                      <th scope="col" class="px-6 py-3">
-                        Action
-                      </th>
+                      <th class="hidden md:table-cell px-6 py-3">Status</th>
+                      <th class="px-6 py-3">Action</th>
                     </tr>
                   </thead>
 

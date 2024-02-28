@@ -17,8 +17,8 @@ export default function AddItemModal({
     lastName: "",
     email: "",
     pwd: "",
-    gender: "",
-    role: "",
+    gender: "MALE",
+    role: "MEMBER",
   });
   const { firstName, lastName, email, pwd, gender, role } = userFormData;
 
