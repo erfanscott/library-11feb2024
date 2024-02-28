@@ -44,7 +44,7 @@ export default function AddItemModal({
     <div
       className={`${
         !isVisible && "hidden"
-      } fixed inset-0 z-50 flex pt-8 [@media(min-width:400px)]:items-center [@media(min-width:400px)]:pt-0 h-dvh w-screen bg-slate-800 bg-opacity-35`}
+      } fixed inset-0 z-50 flex pt-8 [@media(min-width:400px)]:items-scenter [@media(min-width:400px)]:pt-0 h-dvh w-screen bg-slate-800 bg-opacity-35`}
     >
       <div className="max-h-[80%] w-[80%] max-w-md overflow-y-auto mx-auto bg-white rounded-lg shadow dark:border dark:bg-gray-800 dark:border-gray-700">
         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
