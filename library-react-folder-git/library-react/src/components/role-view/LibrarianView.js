@@ -231,6 +231,7 @@ export default function LibrarianView({ logout, editProfile }) {
       await BookService.add(formData);
       toast.success("The book has been successfully added to the library");
       setIsAddItemModalVisible(false);
+      updateEntityList();
     } catch (error) {
       toast.error(error.message);
     }
