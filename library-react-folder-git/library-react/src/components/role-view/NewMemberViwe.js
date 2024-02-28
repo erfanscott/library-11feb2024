@@ -96,7 +96,7 @@ export default function NewMemberView({ logout, editProfile }) {
                     {entity.availability}
                   </div>
                 </td>
-                <td class="px-6 py-4 flex items-end space-x-2">
+                <td class="px-6 py-4 flex items-end space-x-2 min-w-[170px]">
                   <button
                     onClick={(e) => {
                       e.stopPropagation();

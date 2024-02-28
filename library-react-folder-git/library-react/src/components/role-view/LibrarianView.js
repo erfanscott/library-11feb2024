@@ -95,7 +95,7 @@ export default function LibrarianView({ logout, editProfile }) {
                 </td>
                 <td class="hidden md:table-cell px-6 py-4">{entity.gender}</td>
 
-                <td class="px-6 py-4 space-x-2 grid-cols-2">
+                <td class="px-6 py-4 space-x-2 grid-cols-2 min-w-[170px]">
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
@@ -151,7 +151,7 @@ export default function LibrarianView({ logout, editProfile }) {
                     {entity.availability}
                   </div>
                 </td>
-                <td class="px-6 py-6 space-x-2 grid-cols-2">
+                <td class="px-6 py-6 space-x-2 grid-cols-2 min-w-[170px]">
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
