@@ -7,7 +7,6 @@ import MemberView from "../components/role-view/MemberView";
 import NewMemberView from "../components/role-view/NewMemberViwe";
 import AuthService from "../REST/auth-service";
 import UserService from "../REST/user-service";
-import populate from "../dummy";
 
 export default function Profile() {
   // useEffect(() => {
