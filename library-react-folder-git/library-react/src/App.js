@@ -22,7 +22,7 @@ function App() {
       <div id="App">
         <AuthContext.Provider value={{ auth, updateAuth }}>
           <Routes>
-            <Route element={<Dummy />} path="/dummy" />
+            {/* <Route element={<Dummy />} path="/dummy" /> */}
             <Route element={<Login />} path="/log-in" />
             <Route element={<Register />} path="/register" />
             <Route element={<Profile />} path="/profile" />
