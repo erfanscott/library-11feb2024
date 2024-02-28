@@ -5,7 +5,6 @@ import Login from "./routes/Login";
 import Profile from "./routes/Profile";
 import Register from "./routes/Register";
 import useAuth from "./hooks/useAuth";
-import Dummy from "./routes/Dummy";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
