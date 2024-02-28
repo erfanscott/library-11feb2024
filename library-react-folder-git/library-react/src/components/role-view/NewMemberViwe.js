@@ -96,7 +96,7 @@ export default function NewMemberView({ logout, editProfile }) {
                     {entity.availability}
                   </div>
                 </td>
-                <td class="px-6 py-4 flex items-end space-x-2 min-w-[170px]">
+                <td class="px-6 py-4 space-x-2 grid-cols-2 min-w-[170px]">
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
@@ -120,7 +120,7 @@ export default function NewMemberView({ logout, editProfile }) {
                         : entity.borrowedBy.id == currentUser.id
                           ? "bg-violet-700 active:bg-violet-900"
                           : "bg-pink-200"
-                    } py-2 px-2 cursor-pointer text-xs font-medium text-white rounded bg-blue-600 dark:bg-blue-500 hover:underline`}
+                    } py-2 px-2 inline cursor-pointer text-xs font-medium text-white rounded bg-blue-600 dark:bg-blue-500 hover:underline`}
                   >
                     {entity.availability === "AVAILABLE"
                       ? "Borrow"
@@ -134,7 +134,7 @@ export default function NewMemberView({ logout, editProfile }) {
                       setSelectedItemId(id);
                       setIsDetailsModalVisible(true);
                     }}
-                    className="py-2 px-2 cursor-pointer text-xs font-medium text-white rounded bg-blue-600 active:bg-blue-800 dark:bg-blue-500 hover:underline"
+                    className="py-2 px-2 inline cursor-pointer text-xs font-medium text-white rounded bg-blue-600 active:bg-blue-800 dark:bg-blue-500 hover:underline"
                   >
                     Details
                   </button>
