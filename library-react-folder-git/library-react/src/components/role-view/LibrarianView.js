@@ -81,11 +81,11 @@ export default function LibrarianView({ logout, editProfile }) {
                   setSelectedItemId(id);
                   setIsDetailsModalVisible(true);
                 }}
-                class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 active:bg-gray-200 dark:hover:bg-gray-600"
+                class="cursor-pointer bg-white border-b hover:bg-gray-100 active:bg-gray-200"
               >
                 <td class="px-2 py-4 font-bold">{entity.id}</td>
 
-                <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap">
                   <div class="">
                     <div class="text-base font-semibold">
                       {entity.firstName + "\t" + entity.lastName}
@@ -103,7 +103,7 @@ export default function LibrarianView({ logout, editProfile }) {
                       setToBeConfirmedAction("deleteItem");
                       setIsConfirmationModalVisible(true);
                     }}
-                    className="py-2 px-2 inline cursor-pointer text-xs  font-medium text-white rounded bg-red-600 active:bg-red-800 dark:bg-red-500 hover:underline"
+                    className="py-2 px-2 inline cursor-pointer text-xs  font-medium text-white rounded bg-red-600 active:bg-red-800 hover:underline"
                   >
                     Delete
                   </button>
@@ -113,7 +113,7 @@ export default function LibrarianView({ logout, editProfile }) {
                       setSelectedItemId(id);
                       setIsDetailsModalVisible(true);
                     }}
-                    className="py-2 px-2 inline cursor-pointer text-xs font-medium text-white rounded bg-blue-600 active:bg-blue-800 dark:bg-blue-500 hover:underline"
+                    className="py-2 px-2 inline cursor-pointer text-xs font-medium text-white rounded bg-blue-600 active:bg-blue-800 hover:underline"
                   >
                     Details
                   </button>
@@ -126,11 +126,11 @@ export default function LibrarianView({ logout, editProfile }) {
                   setSelectedItemId(id);
                   setIsDetailsModalVisible(true);
                 }}
-                class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 active:bg-gray-200 dark:hover:bg-gray-600"
+                class="cursor-pointer bg-white border-b hover:bg-gray-100 active:bg-gray-200"
               >
                 <td class="px-2 py-4 font-bold">{entity.id}</td>
 
-                <td class="flex items-center max-w-[250px] whitespace-normal px-6 py-4 text-gray-900 dark:text-white">
+                <td class="flex items-center max-w-[250px] whitespace-normal px-6 py-4 text-gray-900 ">
                   <div class="">
                     <div class="text-base font-semibold">{entity.name}</div>
                     <div class="font-normal text-gray-500">
@@ -159,7 +159,7 @@ export default function LibrarianView({ logout, editProfile }) {
                       setToBeConfirmedAction("deleteItem");
                       setIsConfirmationModalVisible(true);
                     }}
-                    className="py-2 px-2 inline cursor-pointer text-xs  font-medium text-white rounded bg-red-600 active:bg-red-800 dark:bg-red-500 hover:underline"
+                    className="py-2 px-2 inline cursor-pointer text-xs  font-medium text-white rounded bg-red-600 active:bg-red-800 hover:underline"
                   >
                     Delete
                   </button>
@@ -168,7 +168,7 @@ export default function LibrarianView({ logout, editProfile }) {
                       setSelectedItemId(id);
                       setIsDetailsModalVisible(true);
                     }}
-                    className="py-2 px-2 inline cursor-pointer text-xs font-medium text-white rounded bg-blue-600 active:bg-blue-800 dark:bg-blue-500 hover:underline"
+                    className="py-2 px-2 inline cursor-pointer text-xs font-medium text-white rounded bg-blue-600 active:bg-blue-800 hover:underline"
                   >
                     Details
                   </button>
@@ -299,17 +299,17 @@ export default function LibrarianView({ logout, editProfile }) {
         />
       )}
 
-      <section className="bg-gray-200 dark:bg-gray-900">
+      <section className="bg-gray-200 ">
         <div className="flex flex-col items-center px-4 py-6 [@media(min-width:400px)]:px-6 [@media(min-width:660px)]:py-8 mx-auto md:h-screen">
-          <div className="w-full bg-white rounded-md sm:rounded-lg shadow dark:border md:mt-0 max-w-5xl xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+          <div className="w-full bg-white rounded-md sm:rounded-lg shadow  md:mt-0 max-w-5xl xl:p-0  ">
             <div class="relative px-6 py-6 shadow-md rounded-md sm:rounded-lg">
               <div className="mb-6 space-y-4">
-                <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
+                <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl  text-center">
                   Welcome {usersName}
                 </h1>
 
                 <div className="tiny:flex tiny:justify-between tiny:items-center">
-                  <h2 className="cursor-pointer text-sm whitespace-nowrap mdLg:text-[18px] spa font-bold leading-tight tracking-tight text-gray-900 dark:text-white">
+                  <h2 className="cursor-pointer text-sm whitespace-nowrap mdLg:text-[18px] spa font-bold leading-tight tracking-tight text-gray-900 ">
                     You have signed in as a librarian !{" "}
                   </h2>
                   <div className="mt-4 tiny:mt-0 flex items-center space-x-2 flex-nowrap">
@@ -318,7 +318,7 @@ export default function LibrarianView({ logout, editProfile }) {
                         setToBeConfirmedAction("logOut");
                         setIsConfirmationModalVisible(true);
                       }}
-                      className="py-2 px-2 cursor-pointer text-xs  font-medium text-white rounded bg-red-600 active:bg-red-800 dark:bg-red-500 hover:underline"
+                      className="py-2 px-2 cursor-pointer text-xs  font-medium text-white rounded bg-red-600 active:bg-red-800  hover:underline"
                     >
                       Logout
                     </button>
@@ -326,14 +326,14 @@ export default function LibrarianView({ logout, editProfile }) {
                       onClick={() => {
                         setIsEditProfileModalVisible(true);
                       }}
-                      className="py-2 px-2 cursor-pointer text-xs font-medium text-white rounded bg-yellow-600 active:bg-yellow-800 dark:bg-yellow-500 hover:underline"
+                      className="py-2 px-2 cursor-pointer text-xs font-medium text-white rounded bg-yellow-600 active:bg-yellow-800  hover:underline"
                     >
                       Edit profile
                     </button>
                   </div>
                 </div>
               </div>
-              <div class="flex flex-col space-y-6 [@media(min-width:550px)]:flex-row [@media(min-width:550px)]:space-y-0 [@media(min-width:550px)]:items-center [@media(min-width:550px)]:justify-between pb-4 dark:bg-gray-900">
+              <div class="flex flex-col space-y-6 [@media(min-width:550px)]:flex-row [@media(min-width:550px)]:space-y-0 [@media(min-width:550px)]:items-center [@media(min-width:550px)]:justify-between pb-4 ">
                 {/*book/member select */}
 
                 <form class="w-full [@media(min-width:550px)]:w-auto">
@@ -341,7 +341,7 @@ export default function LibrarianView({ logout, editProfile }) {
                     id="entity"
                     value={dropDownFormData}
                     onChange={onDropDownFormChange}
-                    class="block bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    class="block bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2"
                   >
                     <option value="books">Books</option>
                     <option value="members">Members</option>
@@ -354,7 +354,7 @@ export default function LibrarianView({ logout, editProfile }) {
                     onClick={() => {
                       setIsAddItemModalVisible(true);
                     }}
-                    class="py-2 px-2 whitespace-nowrap cursor-pointer text-xs font-medium text-white rounded bg-green-600 active:bg-green-800 dark:bg-green-500 hover:underline"
+                    class="py-2 px-2 whitespace-nowrap cursor-pointer text-xs font-medium text-white rounded bg-green-600 active:bg-green-800  hover:underline"
                   >
                     {`${
                       dropDownFormData === "books" ? "ADD BOOK" : "ADD MEMBER"
@@ -364,7 +364,7 @@ export default function LibrarianView({ logout, editProfile }) {
                   <div class="relative flex-1">
                     <div class="absolute inset-y-0 start-0 flex items-center pl-3 pointer-events-none">
                       <svg
-                        class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                        class="w-4 h-4 text-gray-500 "
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -384,7 +384,7 @@ export default function LibrarianView({ logout, editProfile }) {
                       type="search"
                       id="default-search"
                       value={searchedKey}
-                      class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                       placeholder={`${
                         dropDownFormData === "books"
                           ? "book id, name, author..."
@@ -395,9 +395,9 @@ export default function LibrarianView({ logout, editProfile }) {
                 </div>
               </div>
               <div className="overflow-x-auto">
-                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
                   {dropDownFormData === "books" ? (
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
                       <tr className="">
                         <th class="px-2 py-3">ID</th>
                         <th class="inline-block px-6 py-3 max-w-[250px]">
@@ -408,7 +408,7 @@ export default function LibrarianView({ logout, editProfile }) {
                       </tr>
                     </thead>
                   ) : (
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
                       <tr>
                         <th scope="col" class="px-2 py-3">
                           ID
@@ -443,12 +443,12 @@ export default function LibrarianView({ logout, editProfile }) {
                       );
                     }}
                   >
-                    <p class="cursor-pointer flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                    <p class="cursor-pointer flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700">
                       Prev
                     </p>
                   </li>
                   <li>
-                    <p class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                    <p class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">
                       {entityListPage}
                     </p>
                   </li>
@@ -461,7 +461,7 @@ export default function LibrarianView({ logout, editProfile }) {
                       );
                     }}
                   >
-                    <p class="cursor-pointer flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                    <p class="cursor-pointer flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700">
                       Next
                     </p>
                   </li>

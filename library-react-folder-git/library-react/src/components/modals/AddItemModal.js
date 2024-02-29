@@ -46,9 +46,9 @@ export default function AddItemModal({
         !isVisible && "hidden"
       } fixed inset-0 z-50 flex pt-8 [@media(min-width:400px)]:c items-center [@media(min-width:400px)]:pt-0 h-dvh w-screen bg-slate-800 bg-opacity-35`}
     >
-      <div className="max-h-[80%] w-[80%] max-w-md overflow-y-auto mx-auto bg-white rounded-lg shadow dark:border dark:bg-gray-800 dark:border-gray-700">
+      <div className="max-h-[80%] w-[80%] max-w-md overflow-y-auto mx-auto bg-white rounded-lg shadow ">
         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-          <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+          <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
             {item === "book" ? "ADD BOOK" : "ADD MEMBER"}
           </h1>
           {item === "member" ? (
@@ -66,7 +66,7 @@ export default function AddItemModal({
                   {" "}
                   <label
                     for="firstName"
-                    class="mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    class="mb-2 text-sm font-medium text-gray-900"
                   >
                     First name
                   </label>
@@ -77,7 +77,7 @@ export default function AddItemModal({
                     value={firstName}
                     onChange={onUserFormChange}
                     placeholder="Enter member's first name"
-                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
                     required
                   />
                 </div>
@@ -85,7 +85,7 @@ export default function AddItemModal({
                   {" "}
                   <label
                     for="lastNme"
-                    class="mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    class="mb-2 text-sm font-medium text-gray-900 "
                   >
                     Last name
                   </label>
@@ -96,7 +96,7 @@ export default function AddItemModal({
                     value={lastName}
                     onChange={onUserFormChange}
                     placeholder="Enter member's last name"
-                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
                     required
                   />
                 </div>
@@ -105,7 +105,7 @@ export default function AddItemModal({
               <div class="mb-5">
                 <label
                   for="email"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  class="block mb-2 text-sm font-medium text-gray-900 "
                 >
                   Email
                 </label>
@@ -115,7 +115,7 @@ export default function AddItemModal({
                   name="email"
                   value={email}
                   onChange={onUserFormChange}
-                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   placeholder="username@domain.com"
                   required
                 />
@@ -123,7 +123,7 @@ export default function AddItemModal({
               <div class="mb-5">
                 <label
                   for="password"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  class="block mb-2 text-sm font-medium text-gray-900 "
                 >
                   Password
                 </label>
@@ -134,14 +134,14 @@ export default function AddItemModal({
                   value={pwd}
                   onChange={onUserFormChange}
                   placeholder="••••••••"
-                  class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                  class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   required
                 />
               </div>
 
               <div class="mb-8 flex flex-col tiny:flex-row justify-between">
                 <div className="space-y-4 mb-5 tiny:mb-0">
-                  <h3 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  <h3 class="block mb-2 text-sm font-medium text-gray-900">
                     Gender
                   </h3>{" "}
                   <div className="flex">
@@ -153,11 +153,11 @@ export default function AddItemModal({
                         checked={gender === "MALE"}
                         name="gender"
                         onChange={onUserFormChange}
-                        class="w-3 h-3 text-purple-600 bg-gray-100 border-gray-300 dark:ring-offset-gray-800  dark:bg-gray-700 dark:border-gray-600"
+                        class="w-3 h-3 text-purple-600 bg-gray-100 border-gray-300"
                       />
                       <label
                         for="male-radio"
-                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        class="ms-2 text-sm font-medium text-gray-900 "
                       >
                         Male
                       </label>
@@ -170,11 +170,11 @@ export default function AddItemModal({
                         checked={gender === "FEMALE"}
                         name="gender"
                         onChange={onUserFormChange}
-                        class="w-3 h-3 text-purple-600 bg-gray-100 border-gray-300 dark:ring-offset-gray-800  dark:bg-gray-700 dark:border-gray-600"
+                        class="w-3 h-3 text-purple-600 bg-gray-100 border-gray-300"
                       />
                       <label
                         for="female-radio"
-                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        class="ms-2 text-sm font-medium text-gray-900 "
                       >
                         Female
                       </label>
@@ -185,7 +185,7 @@ export default function AddItemModal({
               <div className="flex flex-col space-y-2">
                 <button
                   type="submit"
-                  class="text-white bg-green-700 hover:bg-green-700 active:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                  class="text-white bg-green-700 hover:bg-green-700 active:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                 >
                   Register member
                 </button>
@@ -194,7 +194,7 @@ export default function AddItemModal({
                     setIsVisible(false);
                   }}
                   type="button"
-                  className="col-span-1 text-gray-500 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
+                  className="col-span-1 text-gray-500 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10"
                 >
                   Cancel
                 </button>
@@ -215,7 +215,7 @@ export default function AddItemModal({
                   {" "}
                   <label
                     for="name"
-                    class="mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    class="mb-2 text-sm font-medium text-gray-900"
                   >
                     Book's name
                   </label>
@@ -226,7 +226,7 @@ export default function AddItemModal({
                     value={bookFormData.name}
                     onChange={onBookFormChange}
                     placeholder="Enter the name of the book"
-                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
                     required
                   />
                 </div>
@@ -234,7 +234,7 @@ export default function AddItemModal({
                   {" "}
                   <label
                     for="authorName"
-                    class="mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    class="mb-2 text-sm font-medium text-gray-900 "
                   >
                     AuthorName's name
                   </label>
@@ -245,7 +245,7 @@ export default function AddItemModal({
                     value={authorName}
                     onChange={onBookFormChange}
                     placeholder="Enter AuthorName's name"
-                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
                     required
                   />
                 </div>
@@ -254,7 +254,7 @@ export default function AddItemModal({
               <div className="flex flex-col space-y-2">
                 <button
                   type="submit"
-                  class="text-white bg-green-700 hover:bg-green-700 active:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                  class="text-white bg-green-700 hover:bg-green-700 active:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                 >
                   Add to the library
                 </button>
@@ -263,7 +263,7 @@ export default function AddItemModal({
                     setIsVisible(false);
                   }}
                   type="button"
-                  className="col-span-1 text-gray-500 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
+                  className="col-span-1 text-gray-500 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10"
                 >
                   Cancel
                 </button>

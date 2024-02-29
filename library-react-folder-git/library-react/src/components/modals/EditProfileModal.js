@@ -27,9 +27,9 @@ export default function EditProfileModal({
         !isVisible && "hidden"
       } fixed inset-0 z-50 flex pt-8 items-start [@media(min-width:400px)]:items-center [@media(min-width:400px)]:pt-0 h-dvh w-screen bg-slate-800 bg-opacity-35`}
     >
-      <div className="max-h-[80%] w-[80%] max-w-md overflow-y-auto mx-auto bg-white rounded-lg shadow dark:border dark:bg-gray-800 dark:border-gray-700">
+      <div className="max-h-[80%] w-[80%] max-w-md overflow-y-auto mx-auto bg-white rounded-lg shadow">
         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-          <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+          <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
             Edit your profile information
           </h1>
           <form
@@ -45,7 +45,7 @@ export default function EditProfileModal({
                 {" "}
                 <label
                   for="firstName"
-                  class="mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  class="mb-2 text-sm font-medium text-gray-900"
                 >
                   Your first name
                 </label>
@@ -56,7 +56,7 @@ export default function EditProfileModal({
                   value={firstName}
                   onChange={onFormChange}
                   placeholder="Enter your first name"
-                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
                   required
                 />
               </div>
@@ -64,7 +64,7 @@ export default function EditProfileModal({
                 {" "}
                 <label
                   for="lastNme"
-                  class="mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  class="mb-2 text-sm font-medium text-gray-900 "
                 >
                   Your last name
                 </label>
@@ -75,7 +75,7 @@ export default function EditProfileModal({
                   value={lastName}
                   onChange={onFormChange}
                   placeholder="Enter your first name"
-                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
                   required
                 />
               </div>
@@ -84,7 +84,7 @@ export default function EditProfileModal({
             <div class="mb-8">
               <label
                 for="email"
-                class="flex flex-wrap items-center gap-1 mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                class="flex flex-wrap items-center gap-1 mb-2 text-sm font-medium text-gray-900 "
               >
                 Your email{`\t`}{" "}
                 <span className="text-xs text-red-600 whitespace-nowrap">
@@ -97,7 +97,7 @@ export default function EditProfileModal({
                 name="email"
                 value={email}
                 onChange={onFormChange}
-                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 placeholder="name@domain.com"
                 required
               />
@@ -105,7 +105,7 @@ export default function EditProfileModal({
 
             <button
               type="submit"
-              className="col-span-1 mr-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-3 py-1 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              className="col-span-1 mr-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-3 py-1"
             >
               Submit
             </button>
@@ -114,7 +114,7 @@ export default function EditProfileModal({
                 setIsVisible(false);
               }}
               type="button"
-              className="col-span-1 text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-3 py-1 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
+              className="col-span-1 text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-3 py-1 hover:text-gray-900 focus:z-10"
             >
               Cancel
             </button>

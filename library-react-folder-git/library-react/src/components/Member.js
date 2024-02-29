@@ -5,8 +5,8 @@ export default function Member({ member }) {
 
   return (
     <div className="">
-      <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+      <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-100  ">
           <tr>
             <th scope="col" class="px-2 py-3">
               Name
@@ -15,16 +15,16 @@ export default function Member({ member }) {
         </thead>
 
         <tbody>
-          <tr class=" bg-white border-b dark:bg-gray-800 dark:border-gray-700 ">
-            <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+          <tr class=" bg-white border-b ">
+            <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap ">
               <div class="text-base font-semibold">{`${firstName}\t${lastName}`}</div>
             </td>
           </tr>
         </tbody>
       </table>
 
-      <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+      <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-100  ">
           <tr>
             <th scope="col" class="px-2 py-3">
               Email
@@ -33,16 +33,16 @@ export default function Member({ member }) {
         </thead>
 
         <tbody>
-          <tr class=" bg-white border-b dark:bg-gray-800 dark:border-gray-700 ">
-            <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+          <tr class=" bg-white border-b  ">
+            <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap ">
               <div class="text-base font-semibold">{email}</div>
             </td>
           </tr>
         </tbody>
       </table>
 
-      <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+      <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-100  ">
           <tr>
             <th scope="col" class="px-2 py-3">
               Gender
@@ -51,17 +51,15 @@ export default function Member({ member }) {
         </thead>
 
         <tbody>
-          <tr class=" bg-white border-b dark:bg-gray-800 dark:border-gray-700  ">
-            <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+          <tr class=" bg-white border-b ">
+            <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap ">
               <div class="text-base font-semibold">{gender}</div>
             </td>
           </tr>
         </tbody>
       </table>
-      <table
-        class={`w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400`}
-      >
-        <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+      <table class={`w-full text-sm text-left rtl:text-right text-gray-500 `}>
+        <thead class="text-xs text-gray-700 uppercase bg-gray-100 ">
           <tr>
             <th scope="col" class="px-2 py-3">
               Borrowed Books
@@ -72,8 +70,8 @@ export default function Member({ member }) {
         <tbody className="">
           {borrowedBooks &&
             borrowedBooks.map((book) => (
-              <tr class=" bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+              <tr class=" bg-white border-b ">
+                <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap ">
                   <div class="text-base font-semibold">{book.name}</div>
                 </td>
               </tr>

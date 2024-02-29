@@ -5,8 +5,8 @@ export default function Book({ book }) {
 
   return (
     <div className="">
-      <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+      <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-100 ">
           <tr>
             <th scope="col" class="px-2 py-3">
               Title
@@ -15,16 +15,16 @@ export default function Book({ book }) {
         </thead>
 
         <tbody>
-          <tr class=" bg-white border-b dark:bg-gray-800 dark:border-gray-700 ">
-            <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+          <tr class=" bg-white border-b">
+            <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap">
               <div class="text-base font-semibold">{name}</div>
             </td>
           </tr>
         </tbody>
       </table>
 
-      <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+      <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-100">
           <tr>
             <th scope="col" class="px-2 py-3">
               Written By
@@ -33,16 +33,16 @@ export default function Book({ book }) {
         </thead>
 
         <tbody>
-          <tr class=" bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-            <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+          <tr class=" bg-white border-b">
+            <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap">
               <div class="text-base font-semibold">{authorName}</div>
             </td>
           </tr>
         </tbody>
       </table>
 
-      <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+      <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-100">
           <tr>
             <th scope="col" class="px-2 py-3">
               Status
@@ -51,7 +51,7 @@ export default function Book({ book }) {
         </thead>
 
         <tbody>
-          <tr class=" bg-white border-b dark:bg-gray-800 dark:border-gray-700 ">
+          <tr class=" bg-white border-b">
             <td class=" px-6 py-4">
               <div class="flex items-center">
                 <div
@@ -68,9 +68,9 @@ export default function Book({ book }) {
       <table
         class={`${
           availability === "AVAILABLE" && "hidden"
-        } w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400`}
+        } w-full text-sm text-left rtl:text-right text-gray-500 `}
       >
-        <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-100">
           <tr>
             <th scope="col" class="px-2 py-3">
               Borrowed By:
@@ -79,8 +79,8 @@ export default function Book({ book }) {
         </thead>
 
         <tbody>
-          <tr class=" bg-white border-b dark:bg-gray-800 dark:border-gray-700  ">
-            <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+          <tr class=" bg-white border-b">
+            <td class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap">
               <div class="text-base font-semibold">{`${borrowedBy?.firstName}\t${borrowedBy?.lastName}`}</div>
             </td>
           </tr>

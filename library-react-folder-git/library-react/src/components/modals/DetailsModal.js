@@ -35,7 +35,7 @@ export default function DetailsModal({ isVisible, setIsVisible, item, id }) {
         !isVisible && "hidden"
       } fixed inset-0 z-50 flex pt-8 [@media(min-width:400px)]:items-center [@media(min-width:400px)]:pt-0 h-dvh w-screen bg-slate-800 bg-opacity-35`}
     >
-      <div className="max-h-[80%] w-[80%] max-w-md overflow-y-auto mx-auto bg-white rounded-lg shadow dark:border dark:bg-gray-800 dark:border-gray-700">
+      <div className="max-h-[80%] w-[80%] max-w-md overflow-y-auto mx-auto bg-white rounded-lg shadow">
         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
           {item === "book" ? (
             <Book book={toBeShownEntity} />
@@ -47,7 +47,7 @@ export default function DetailsModal({ isVisible, setIsVisible, item, id }) {
               setIsVisible(false);
             }}
             type="button"
-            className="col-span-1 text-gray-500 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
+            className="col-span-1 text-gray-500 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10"
           >
             Cancel
           </button>
